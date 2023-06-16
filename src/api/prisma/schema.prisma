@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model DailyItinerary {
+  id              Int           @id @default(autoincrement())
+  timeOfDay       DateTime
+  activity        String        @db.VarChar(255)
+  address         String        @db.VarChar(255)
+  description     String        @db.VarChar(255)
+  tripItinerary   TripItinerary @relation(fields: [tripItineraryId], references: [id])
+  tripItineraryId Int
+}
+
+model TripItinerary {
+  id              Int           @id @default(autoincrement())
+  location        String        @db.VarChar(255)
+  durationDays    Int           
+  arrivalTime     DateTime?
+  departureTime   DateTime?
+  hasCar          Boolean       @default(false)
+  completion      Boolean       @default(false)
+  dailyItineraries DailyItinerary[]
+  user            User          @relation(fields: [userId], references: [id])
+  userId          Int
+}
+
+model User {
+  id              Int           @id @default(autoincrement())
+  tripItineraries TripItinerary[]
+}

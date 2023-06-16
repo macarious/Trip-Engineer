@@ -1,0 +1,22 @@
+{
+  "name": "trek-maker",
+  "version": "1.0.0",
+  "description": "Create trip itineraries for a specific location.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^4.15.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "prisma": "^4.15.0"
+  }
+}
