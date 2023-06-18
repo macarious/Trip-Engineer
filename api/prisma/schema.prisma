@@ -20,7 +20,7 @@ model DailyItinerary {
   tripItineraryId Int
 }
 
-model TripItinerary {
+model TravelPlan {
   id              Int           @id @default(autoincrement())
   location        String        @db.VarChar(255)
   durationDays    Int           
@@ -35,5 +35,5 @@ model TripItinerary {
 
 model User {
   id              Int           @id @default(autoincrement())
-  tripItineraries TripItinerary[]
+  travelPlans     TripPlan[]
 }

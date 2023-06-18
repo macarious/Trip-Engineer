@@ -1,5 +1,5 @@
 {
-  "name": "trek-maker-api",
+  "name": "api",
   "version": "1.0.0",
   "description": "Create trip itineraries for a specific destination.",
   "main": "index.js",
