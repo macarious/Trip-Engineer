@@ -1,12 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useUser } from "../UserContext";
 import { Outlet, Link } from "react-router-dom";
 import { Nav, Navbar, Container } from 'react-bootstrap';
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default AppLayout;
 
 function AppLayout() {
-    const { user, setUser } = useUser();
+    const { isAuthenticated, user, logout } = useAuth0();
     
     return (
         <div>
@@ -16,20 +16,17 @@ function AppLayout() {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link as={Link} to="/TripGenerator">Trip Generator</Nav.Link>
-                    <Nav.Link as={Link} to="/SavedPlans">Saved Plans</Nav.Link>
+                        <Nav.Link as={Link} to="/TripGenerator">Trip Generator</Nav.Link>
+                        <Nav.Link as={Link} to="/SavedPlans">Saved Plans</Nav.Link>
                 </Nav>
                 <Nav>
                     <Nav.Link as={Link} to="/Profile">{user?.name}</Nav.Link>
-                    {user ? (
-                        <Nav.Link onClick={() => setUser(null)} as={Link} to="/">
-                            Log Out
-                        </Nav.Link>
+                    { !isAuthenticated ? (
+                        <Nav.Link as={Link} to="/VerifyUser">Login</Nav.Link>
                     ) : (
-                        <Nav.Link as={Link} to="/">
-                            Log In
-                        </Nav.Link>
-                    )}
+                        <Nav.Link onClick={() => logout({ returnTo: window.location.origin })}>Log Out</Nav.Link>
+                    )
+                    }
                 </Nav>
                 </Navbar.Collapse>
             </Container>
