@@ -16,13 +16,13 @@ function AppLayout() {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
-                        <Nav.Link as={Link} to="/TripGenerator">Trip Generator</Nav.Link>
-                        <Nav.Link as={Link} to="/SavedPlans">Saved Plans</Nav.Link>
+                        <Nav.Link as={Link} to="/generator">Plan Generator</Nav.Link>
+                        <Nav.Link as={Link} to="/plans">Saved Plans</Nav.Link>
                 </Nav>
                 <Nav>
-                    <Nav.Link as={Link} to="/Profile">{user?.name}</Nav.Link>
+                    <Nav.Link as={Link} to="/profile">{user?.name}</Nav.Link>
                     { !isAuthenticated ? (
-                        <Nav.Link as={Link} to="/VerifyUser">Login</Nav.Link>
+                        <Nav.Link as={Link} to="/verify-user">Login</Nav.Link>
                     ) : (
                         <Nav.Link onClick={() => logout({ returnTo: window.location.origin })}>Log Out</Nav.Link>
                     )

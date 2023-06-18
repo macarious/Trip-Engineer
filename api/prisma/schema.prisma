@@ -10,30 +10,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model DailyItinerary {
+model dailyPlan {
   id              Int           @id @default(autoincrement())
   timeOfDay       DateTime
-  activity        String        @db.VarChar(255)
-  address         String        @db.VarChar(255)
-  description     String        @db.VarChar(255)
-  tripItinerary   TripItinerary @relation(fields: [tripItineraryId], references: [id])
-  tripItineraryId Int
+  activity        String        
+  address         String        
+  description     String        
+  travelPlan      travelPlan    @relation(fields: [travelPlanId], references: [id])
+  travelPlanId    Int
 }
 
-model TravelPlan {
+model travelPlan {
   id              Int           @id @default(autoincrement())
-  location        String        @db.VarChar(255)
+  location        String        
   durationDays    Int           
   arrivalTime     DateTime?
   departureTime   DateTime?
   hasCar          Boolean       @default(false)
   completion      Boolean       @default(false)
-  dailyItineraries DailyItinerary[]
-  user            User          @relation(fields: [userId], references: [id])
+  dailyPlans      dailyPlan[]
+  user            user          @relation(fields: [userId], references: [id])
   userId          Int
 }
 
-model User {
+model user {
   id              Int           @id @default(autoincrement())
-  travelPlans     TripPlan[]
+  email           String        
+  auth0Id         String        @unique @default("")
+  name            String?
+  travelPlans     travelPlan[]
+  stripeId        String?
+  currentPlan     plans?        @default(FREE)
+}
+
+enum plans {
+  FREE
+  BASIC
+  PRO
+  MAX
 }

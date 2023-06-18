@@ -10,7 +10,7 @@ import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 import Profile from "./components/Profile";
 import SavedPlans from "./components/SavedPlans";
-import TripGenerator from "./components/TripGenerator";
+import PlanGenerator from "./components/PlanGenerator";
 import VerifyUser from "./components/VerifyUser";
 
 const container = document.getElementById("root");
@@ -50,20 +50,20 @@ root.render(
         >
         <AuthTokenProvider>
                 <BrowserRouter>
-                <Routes>
-                    <Route path="/verify-user" element={<VerifyUser />} />
-                    <Route path="/login" element={<AppLayout />}>
-                        <Route index element={<Login />} />
-                    </Route>
-                    <Route path="/" element={<RequireAuth><AppLayout /></RequireAuth>}>
-                        <Route index element={<Home />} />
-                        <Route path="*" element={<NotFound />} />
-                        <Route path="profile" element={<Profile />} />
-                        <Route path="plans" element={<SavedPlans />} />
-                        <Route path="tripgenerator" element={<TripGenerator />} />
-                        <Route path="debugger" element={<AuthDebugger />} />
-                    </Route>
-                </Routes>
+                    <Routes>
+                        <Route path="/verify-user" element={<VerifyUser />} />
+                        <Route path="/login" element={<AppLayout />}>
+                            <Route index element={<Login />} />
+                        </Route>
+                        <Route path="/" element={<RequireAuth><AppLayout /></RequireAuth>}>
+                            <Route index element={<Home />} />
+                            <Route path="*" element={<NotFound />} />
+                            <Route path="profile" element={<Profile />} />
+                            <Route path="plans" element={<SavedPlans />} />
+                            <Route path="generator" element={<PlanGenerator />} />
+                            <Route path="debugger" element={<AuthDebugger />} />
+                        </Route>
+                    </Routes>
                 </BrowserRouter>
         </AuthTokenProvider>
         </Auth0Provider>

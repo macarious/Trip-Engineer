@@ -8,24 +8,24 @@ export default function VerifyUser() {
 
     useEffect(() => {
         async function verifyUser() {
-        const data = await fetch(`${process.env.REACT_APP_API_URL}/verify-user`, {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-            },
-        });
-        const user = await data.json();
+            const data = await fetch(`${process.env.REACT_APP_API_URL}/verify-user`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            const user = await data.json();
 
-        if (user.auth0Id) {
-            navigate("/app");
-        }
+            if (user.auth0Id) {
+                navigate("/");
+            }
         }
 
         if (accessToken) {
-        verifyUser();
+            verifyUser();
         }
-    }, [accessToken, navigate]);
+    }, [accessToken]);
 
     return <div className="loading">Loading...</div>;
     }

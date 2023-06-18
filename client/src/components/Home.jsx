@@ -9,23 +9,23 @@ export default function Home() {
     return (
         <Container style={{ marginTop: '30vh' }} className="d-flex flex-column align-items-center justify-content-center">
             <div className="d-grid gap-2">
-                <Row>
-                    {user?.name}
+                <Row className="mx-auto">
+                    <h5>{user?.name}</h5>
+                </Row>
+                <Row className="mx-auto">
+                    <p>Are you ready for your next adventure?</p>
                 </Row>
                 <Row>
-                    Ready for your next vacation?
+                    <Button variant="primary" active as={Link} to="/generator">Plan Generator</Button>
                 </Row>
                 <Row>
-                    <Button variant="primary" active as={Link} to="/SavedPlans">Saved Plans</Button>
+                    <Button variant="primary" active as={Link} to="/plans">Saved Plans</Button>
                 </Row>
                 <Row>
-                    <Button variant="primary" active as={Link} to="/TripGenerator">Trip Generator</Button>
+                    <Button variant="primary" active as={Link} to="/profile">Profile</Button>
                 </Row>
                 <Row>
-                    <Button variant="primary" active as={Link} to="/Profile">Profile</Button>
-                </Row>
-                <Row>
-                    <Button variant="primary-outline" active as={Link} to="/Login" onClick={() => logout({ returnTo: window.location.origin })}>
+                    <Button variant="outline" active as={Link} to="/login" onClick={() => logout({ returnTo: window.location.origin })}>
                         Log Out
                     </Button>
                 </Row>
