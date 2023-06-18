@@ -32,9 +32,9 @@ export default function VerifyUser() {
         <Container style={{ marginTop: '30vh' }} className="d-flex flex-column align-items-center justify-content-center">
             <div className="d-grid gap-2">
                 <Row className="mx-auto">
-                    <p>Loading...</p>
+                    Loading...
                 </Row>
             </div>
-        </Container>
-    )
+        </ Container>
+    );
 }

@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import { Container, Row, Button } from "react-bootstrap";
 
 export default function NotFound() {
-
     return (
         <Container style={{ marginTop: '30vh' }} className="d-flex flex-column align-items-center justify-content-center">
             <div className="d-grid gap-2">
-                <Row>
+                <Row className="mx-auto">
                     404 Page Not Found
                 </Row>
                 <Row>
