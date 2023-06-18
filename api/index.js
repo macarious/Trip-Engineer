@@ -2,9 +2,9 @@ import express from "express";
 import pkg from "@prisma/client";
 import morgan from "morgan";
 import cors from "cors";
-import { requireAuth } from "./auth.js";
-import { databaseRouter } from "./database.js";
-import { scheduleGeneratorRouter } from "./scheduleGenerator.js";
+import requireAuth from "./auth.js";
+import databaseRouter from "./database.js";
+import scheduleGeneratorRouter from "./scheduleGenerator.js";
 
 const app = express();
 const { PrismaClient } = pkg;

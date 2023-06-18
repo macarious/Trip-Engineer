@@ -2,6 +2,7 @@ import express from "express";
 
 const scheduleGeneratorRouter = express.Router();
 
+export default scheduleGeneratorRouter;
 
 /**
  * CREATE -- post a schedule
@@ -18,5 +19,3 @@ const scheduleGeneratorRouter = express.Router();
 /**
  * DELETE -- delete a scehdule
  */
-
-export { scheduleGeneratorRouter };

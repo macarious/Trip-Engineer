@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useAuthToken } from "../AuthTokenContext";
 import { useNavigate } from "react-router-dom";
+import { Container, Row } from "react-bootstrap";
 
 export default function VerifyUser() {
     const navigate = useNavigate();
@@ -27,5 +28,13 @@ export default function VerifyUser() {
         }
     }, [accessToken]);
 
-    return <div className="loading">Loading...</div>;
-    }
+    return (
+        <Container style={{ marginTop: '30vh' }} className="d-flex flex-column align-items-center justify-content-center">
+            <div className="d-grid gap-2">
+                <Row className="mx-auto">
+                    <p>Loading...</p>
+                </Row>
+            </div>
+        </Container>
+    )
+}

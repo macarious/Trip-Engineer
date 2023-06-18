@@ -9,4 +9,4 @@ const requireAuth = auth({
     tokenSigningAlg: 'RS256'
     });
 
-export { requireAuth };
+export default requireAuth;

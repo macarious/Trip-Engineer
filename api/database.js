@@ -5,6 +5,8 @@ const databaseRouter = express.Router();
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 
+export default databaseRouter;
+
 /**
  * CREATE -- post a schedule
  */
@@ -20,6 +22,3 @@ const prisma = new PrismaClient();
 /**
  * DELETE -- delete a scehdule
  */
-
-
-export { databaseRouter };

@@ -22,7 +22,7 @@ model dailyPlan {
 
 model travelPlan {
   id              Int           @id @default(autoincrement())
-  location        String        
+  location        String        @db.VarChar(31)
   durationDays    Int           
   arrivalTime     DateTime?
   departureTime   DateTime?
@@ -35,17 +35,8 @@ model travelPlan {
 
 model user {
   id              Int           @id @default(autoincrement())
-  email           String        
+  email           String        @unique
   auth0Id         String        @unique @default("")
   name            String?
   travelPlans     travelPlan[]
-  stripeId        String?
-  currentPlan     plans?        @default(FREE)
-}
-
-enum plans {
-  FREE
-  BASIC
-  PRO
-  MAX
 }
