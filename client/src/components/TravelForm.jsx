@@ -29,8 +29,7 @@ export default function TravelForm() {
                     hasCar: hasCar,
                 }
             );
-            console.log("Form submitted:");
-            console.log(formData);
+            console.log("Form submitted");
         }
     };
 
@@ -64,9 +63,10 @@ export default function TravelForm() {
                     placeholder="ex. Vancouver, BC"
                     aria-label="Destination"
                     aria-describedby="Enter destination; ex. Vancouver, BC"
+                    pattern=".{5,50}"
                     required
                 />
-                <Form.Control.Feedback type="invalid">Please input a destination</Form.Control.Feedback>
+                <Form.Control.Feedback type="invalid">Please input a destination (5 to 50 characters)</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group controlId="durationDays">

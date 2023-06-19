@@ -29,13 +29,11 @@ app.use("/scheduleGenerator", requireAuth, scheduleGeneratorRouter);
 // get Profile information of authenticated user
 app.get("/me", requireAuth, async (req, res) => {
     const auth0Id = req.auth.payload.sub;
-  
     const user = await prisma.user.findUnique({
         where: {
             auth0Id,
         },
     });
-  
     res.json(user);
 });
 
