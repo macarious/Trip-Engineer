@@ -17,12 +17,8 @@ export default function TravelForm() {
 
     function handleFormSubmit(e) {
         const form = e.target;
-        console.log(form.checkValidity());
         e.preventDefault();
-        if (form.checkValidity() === false) {
-            console.log("Form invalid");
-            e.stopPropagation();
-        } else {
+        if (form.checkValidity() === true) {
             setValidated(true);
             setFormData(
                 {
@@ -33,7 +29,7 @@ export default function TravelForm() {
                     hasCar: hasCar,
                 }
             );
-            console.log("Form submitted");
+            console.log("Form submitted:");
             console.log(formData);
         }
     };
@@ -54,8 +50,6 @@ export default function TravelForm() {
         setHasCar(value);
     };
 
-
-
     return (
         <Form
             noValidate
@@ -64,21 +58,20 @@ export default function TravelForm() {
             onSubmit={handleFormSubmit}
         >
             <Form.Group controlId="destination">
-                <Form.Label className="fw-bold">Destination</Form.Label>
+                <Form.Label className="fw-bold mt-3">Destination</Form.Label>
                 <Form.Control
                     type="text"
                     placeholder="ex. Vancouver, BC"
                     aria-label="Destination"
                     aria-describedby="Enter destination; ex. Vancouver, BC"
-                    className="mb-3"
                     required
                 />
                 <Form.Control.Feedback type="invalid">Please input a destination</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group controlId="durationDays">
-                <Form.Label className="fw-bold">Duration (in days)</Form.Label>
-                <ButtonGroup className="d-flex mb-3">
+                <Form.Label className="fw-bold mt-3">Duration (in days)</Form.Label>
+                <ButtonGroup className="d-flex">
                     {[...Array(7)].map((_, index) => (
                     <Button
                         key={index + 1}
@@ -95,13 +88,13 @@ export default function TravelForm() {
             </Form.Group>
 
             <Form.Group controlId="arrivalTime">
-                <Form.Label className="fw-bold">Arrival Time</Form.Label>
+                <Form.Label className="fw-bold mt-3">Arrival Time</Form.Label>
                 <Form.Control
                     type="time"
+                    name="arrivalTime"
                     value={formData.arrivalTime}
                     aria-label="Arrival Time"
                     aria-describedby="Enter arrival time of first day"
-                    className="mb-3"
                     onChange={handleTimeChange}
                     required
                 />
@@ -109,13 +102,13 @@ export default function TravelForm() {
             </Form.Group>
 
             <Form.Group controlId="departureTime">
-                <Form.Label className="fw-bold">Departure Time</Form.Label>
+                <Form.Label className="fw-bold mt-3">Departure Time</Form.Label>
                 <Form.Control
                     type="time"
+                    name="departureTime"
                     value={formData.departureTime}
                     aria-label="Departure Time"
                     aria-describedby="Enter departure time of final day"
-                    className="mb-3"
                     onChange={handleTimeChange}
                     required
                 />
@@ -123,7 +116,7 @@ export default function TravelForm() {
             </Form.Group>
 
             <Form.Group controlId="hasCar">
-                <ButtonGroup className="d-flex d-flex justify-content-center my-1">
+                <ButtonGroup className="d-flex d-flex justify-content-center mt-4">
                     <Button
                         variant={hasCar === true ? "success" : "outline-secondary"}
                         aria-label="Has car"
@@ -145,13 +138,13 @@ export default function TravelForm() {
                 </ButtonGroup>
             </Form.Group>
             
-            <div className="d-flex align-items-center justify-content-center">
+            <div className="d-flex align-items-center justify-content-center my-4">
                 <Button
                     type="submit"
                     aria-label="Generate"
                     aria-describedby="Generate a vacation plan"
                     variant="primary"
-                    className="w-50 my-5"
+                    className="w-50"
                 >
                     GENERATE
                 </Button>
