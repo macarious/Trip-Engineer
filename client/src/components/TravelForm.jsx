@@ -3,106 +3,159 @@ import { Form, Button, ButtonGroup, InputGroup } from 'react-bootstrap';
 
 export default function TravelForm() {
 
-    const [formData, setFormData] = useState();
+    const [durationDays, setDurationDays] = useState(1);
     const [hasCar, setHasCar] = useState(true);
-    const [validdated, setValidated] = useState(false);
+    const [formData, setFormData] = useState(
+        {
+            destination: "",
+            durationDays: durationDays,
+            arrivalTime: "09:00",
+            departureTime: "18:00",
+            hasCar: hasCar,
+    });
+    const [validated, setValidated] = useState(false);
 
-    const handleFormSubmit = (e) => {
+    function handleFormSubmit(e) {
+        const form = e.target;
+        console.log(form.checkValidity());
         e.preventDefault();
-        setFormData(
-            {
-                destination: e.currentTarget.destination.value,
-                durationDays: e.currentTarget.durationDays.value,
-                arrivalTime: e.currentTarget.arrivalTime.value,
-                departureTime: e.currentTarget.departureTime.value,
-                hasCar: hasCar,
-            }
-        );
-        console.log("Form submitted!");
-        console.log(formData);
+        if (form.checkValidity() === false) {
+            console.log("Form invalid");
+            e.stopPropagation();
+        } else {
+            setValidated(true);
+            setFormData(
+                {
+                    destination: form.destination.value,
+                    durationDays: durationDays,
+                    arrivalTime: form.arrivalTime.value,
+                    departureTime: form.departureTime.value,
+                    hasCar: hasCar,
+                }
+            );
+            console.log("Form submitted");
+            console.log(formData);
+        }
     };
 
-    const handleCarButtonClick = (value) => {
+    function handleTimeChange (e) {
+        const { name, value } = e.target;
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: value,
+        }));
+    };
+
+    function handleDurationButtonClick (value) {
+        setDurationDays(value);
+    };
+
+    function handleCarButtonClick (value) {
         setHasCar(value);
     };
 
+
+
     return (
-        <Form className="d-grid gap-1" onSubmit={handleFormSubmit}>
+        <Form
+            noValidate
+            validated={validated}
+            className="d-grid"
+            onSubmit={handleFormSubmit}
+        >
             <Form.Group controlId="destination">
-                <Form.Label>Destination</Form.Label>
+                <Form.Label className="fw-bold">Destination</Form.Label>
                 <Form.Control
                     type="text"
                     placeholder="ex. Vancouver, BC"
                     aria-label="Destination"
                     aria-describedby="Enter destination; ex. Vancouver, BC"
+                    className="mb-3"
+                    required
                 />
+                <Form.Control.Feedback type="invalid">Please input a destination</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group controlId="durationDays">
-                <Form.Label>Duration</Form.Label>
-                <InputGroup>
-                    <Form.Control
-                        type="number"
-                        placeholder="(up to 7)"
-                        aria-label="Duration"
-                        aria-describedby="Enter duration of trip; max 7"
-                        min={1}
-                        max={7}
-                    />
-                    <InputGroup.Text>day(s)</InputGroup.Text>
-                </InputGroup>
+                <Form.Label className="fw-bold">Duration (in days)</Form.Label>
+                <ButtonGroup className="d-flex mb-3">
+                    {[...Array(7)].map((_, index) => (
+                    <Button
+                        key={index + 1}
+                        variant={durationDays === (index + 1) ? "success" : "outline-secondary"}
+                        aria-label={`Duration ${index + 1} Day(s)`}
+                        aria-describedby={`Duration ${index + 1} Day(s)`}
+                        onClick={() => handleDurationButtonClick(index + 1)}
+                        className="d-flex d-flex justify-content-center fw-bold"
+                    >
+                        {index + 1}
+                    </Button>
+                    ))}
+                </ButtonGroup>
             </Form.Group>
 
             <Form.Group controlId="arrivalTime">
-                <Form.Label>Arrival Time</Form.Label>
+                <Form.Label className="fw-bold">Arrival Time</Form.Label>
                 <Form.Control
                     type="time"
+                    value={formData.arrivalTime}
                     aria-label="Arrival Time"
                     aria-describedby="Enter arrival time of first day"
+                    className="mb-3"
+                    onChange={handleTimeChange}
+                    required
                 />
+                <Form.Control.Feedback type="invalid">Please select an arrival time</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group controlId="departureTime">
-                <Form.Label>Departure Time</Form.Label>
+                <Form.Label className="fw-bold">Departure Time</Form.Label>
                 <Form.Control
                     type="time"
+                    value={formData.departureTime}
                     aria-label="Departure Time"
                     aria-describedby="Enter departure time of final day"
+                    className="mb-3"
+                    onChange={handleTimeChange}
+                    required
                 />
+                <Form.Control.Feedback type="invalid">Please select a departure time</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group controlId="hasCar">
-                <ButtonGroup className="d-flex justify-content-center mt-3">
+                <ButtonGroup className="d-flex d-flex justify-content-center my-1">
                     <Button
-                        variant={hasCar === true ? "info" : "outline-info"}
+                        variant={hasCar === true ? "success" : "outline-secondary"}
                         aria-label="Has car"
                         aria-describedby="Has a car"
                         onClick={() => handleCarButtonClick(true)}
-                        className="w-50"
+                        className="w-50 fw-bold"
                     >
                         Car
                     </Button>
                     <Button
-                        variant={hasCar === false ? "info" : "outline-info"}
+                        variant={hasCar === false ? "success" : "outline-secondary"}
                         aria-label="No car"
                         aria-describedby="Does not have a car"
                         onClick={() => handleCarButtonClick(false)}
-                        className="w-50"
+                        className="w-50 fw-bold"
                     >
                         No Car
                     </Button>
                 </ButtonGroup>
             </Form.Group>
-
-            <Button
-                type="submit"
-                aria-label="Generate"
-                aria-describedby="Generate a vacation plan"
-                variant="primary"
-                className="mt-3"
-            >
-                GENERATE
-            </Button>
+            
+            <div className="d-flex align-items-center justify-content-center">
+                <Button
+                    type="submit"
+                    aria-label="Generate"
+                    aria-describedby="Generate a vacation plan"
+                    variant="primary"
+                    className="w-50 my-5"
+                >
+                    GENERATE
+                </Button>
+            </div>
         </Form>
     );
 }

@@ -4,7 +4,7 @@ import TravelForm from "./TravelForm";
 
 export default function PlanGenerator() {
     return (
-        <Container style={{ marginTop: '5%' }} className="d-flex flex-column align-items-center justify-content-center">
+        <Container style={{ marginTop: '5%', maxWidth: '400px' }} className="d-flex flex-column">
             <div className="d-grid gap-2">
                 <Row className="mx-auto">
                     <h3>Plan Generator</h3>
