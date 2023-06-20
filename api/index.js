@@ -3,8 +3,8 @@ import pkg from "@prisma/client";
 import morgan from "morgan";
 import cors from "cors";
 import requireAuth from "./auth.js";
-import databaseRouter from "./database.js";
-import scheduleGeneratorRouter from "./scheduleGenerator.js";
+import planRouter from "./plan.js";
+import generatorRouter from "./generator.js";
 
 const app = express();
 const { PrismaClient } = pkg;
@@ -20,12 +20,13 @@ app.get("/ping", (req, res) => {
     res.send("pong");
     });
 
-// Database related endpoints
-app.use("/database", requireAuth, databaseRouter);
+// Trip Plans related endpoints
+app.use("/plan", requireAuth, planRouter);
 
-// Schedule Generator endpoints
-app.use("/scheduleGenerator", requireAuth, scheduleGeneratorRouter);
+// Schedule Generation related endpoints
+app.use("/generator", requireAuth, generatorRouter);
 
+// User Related endpoints:
 // get Profile information of authenticated user
 app.get("/me", requireAuth, async (req, res) => {
     const auth0Id = req.auth.payload.sub;

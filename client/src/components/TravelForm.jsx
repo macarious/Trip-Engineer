@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, ButtonGroup, InputGroup } from 'react-bootstrap';
+import { Form, Button, ButtonGroup } from 'react-bootstrap';
 
 export default function TravelForm() {
 
