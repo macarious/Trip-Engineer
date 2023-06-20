@@ -10,12 +10,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model dailyPlan {
+model travelNotes {
   id              Int           @id @default(autoincrement())
-  timeOfDay       DateTime
-  activity        String        
-  address         String        
-  description     String        
+  content         String        @db.VarChar(255)
   travelPlan      travelPlan    @relation(fields: [travelPlanId], references: [id])
   travelPlanId    Int
 }
@@ -28,7 +25,8 @@ model travelPlan {
   departureTime   DateTime?
   hasCar          Boolean       @default(false)
   completion      Boolean       @default(false)
-  dailyPlans      dailyPlan[]
+  plan            Json?
+  travelNotes     travelNotes[]
   user            user          @relation(fields: [userId], references: [id])
   userId          Int
 }
