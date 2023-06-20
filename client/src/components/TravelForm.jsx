@@ -72,7 +72,7 @@ export default function TravelForm() {
             <Form.Group controlId="durationDays">
                 <Form.Label className="fw-bold mt-3">Duration (in days)</Form.Label>
                 <ButtonGroup className="d-flex">
-                    {[...Array(7)].map((_, index) => (
+                    {[...Array(5)].map((_, index) => (
                     <Button
                         key={index + 1}
                         variant={durationDays === (index + 1) ? "success" : "outline-secondary"}

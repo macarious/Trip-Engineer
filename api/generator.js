@@ -13,23 +13,22 @@ const generatorRouter = express.Router();const { travelPlan, setTravelPlan } = u
     },
 });
 
+// Construct the headers to be sent to the API
 const headers = new Headers();
 headers.append("Content-Type", "application/json");
 headers.append("Accept", "application/json");
 headers.append("Authorization", process.env.OPENAI_API_KEY);
 
-const prompt = `Create a concise Vancouver trip schedule. ${ hasCar? "Car" : "No car" } available.
-                Arrival: Day 1, ${ arrivalTime }. Departure: Day ${ durationDays }, ${ departureTime }.
-                Consider commuting time to/from airport. Include arrival and departure as activity.
-                Suggest max 5 activities per day. For each activity, provide start time, short description activity, and address.
-                Do not suggest dining and hotel.
-                Utilize local knowledge.`;
+// Construct the prompt to be sent to the API
+const prompt = `Create a concise trip schedule for a self-guided tour in Vancouver. ${ hasCar? "Car" : "No car" } available. Trip starts on day 1 at ${ arrivalTime }, and ends on day ${ durationDays } at ${ departureTime }. Consider commuting time to/from airport. Include arrival and departure as activity. For each day, suggest a maximum of 5 activities. For each activity, provide start time, short description of activity, and address. Each day, visit a different geographical area. Activities may include sightseeing, shopping, cultural/recreational activities, enjoying local cuisine, and visiting coffee shops. Do not suggest hotel. Utilize local knowledge.`
 
+// Construct the function to be called by the API
 function create_itinerary(newTravelPlan) {
     setTravelPlan(newTravelPlan);
     console.log(newTravelPlan);
 }
 
+// Construct the body to be sent to the API
 const body = JSON.stringify({
     "model": "gpt-3.5-turbo",
     "messages": [

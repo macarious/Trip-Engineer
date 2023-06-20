@@ -4,7 +4,7 @@ import morgan from "morgan";
 import cors from "cors";
 import requireAuth from "./auth.js";
 import planRouter from "./plan.js";
-import generatorRouter from "./generator.js";
+// import generatorRouter from "./generator.js";
 
 const app = express();
 const { PrismaClient } = pkg;
@@ -23,8 +23,8 @@ app.get("/ping", (req, res) => {
 // Trip Plans related endpoints
 app.use("/plan", requireAuth, planRouter);
 
-// Schedule Generation related endpoints
-app.use("/generator", requireAuth, generatorRouter);
+// // Schedule Generation related endpoints
+// app.use("/generator", requireAuth, generatorRouter);
 
 // User Related endpoints:
 // get Profile information of authenticated user
