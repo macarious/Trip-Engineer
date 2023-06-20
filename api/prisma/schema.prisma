@@ -12,7 +12,7 @@ datasource db {
 
 model travelNote {
   id              Int           @id @default(autoincrement())
-  content         String        @db.VarChar(255)
+  title           String        @db.VarChar(255)
   travelPlan      travelPlan    @relation(fields: [travelPlanId], references: [id])
   travelPlanId    Int
 }

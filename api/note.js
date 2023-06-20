@@ -14,7 +14,7 @@ const prisma = new PrismaClient();
  */
 travelNoteRouter.post("/:planId", async (req, res) => {
     const { planId } = req.params;
-    const { content } = req.body;
+    const { title } = req.body;
 
     // Verify user status
     const auth0Id = req.auth.payload.sub;
@@ -24,7 +24,7 @@ travelNoteRouter.post("/:planId", async (req, res) => {
     };
 
     // Verify required fields
-    if (!content) {
+    if (!title) {
         res.status(400).send("Missing required fields");
         return;
     };
@@ -32,7 +32,7 @@ travelNoteRouter.post("/:planId", async (req, res) => {
     // Create the note
     const note = await prisma.travelNote.create({
         data: {
-            content,
+            title,
             travelPlan: { connect: { id: planId } }, 
         },
     });
@@ -80,15 +80,15 @@ travelNoteRouter.get("/:planId", async (req, res) => {
         return;
     };
 
-    // Retrieve the plans
-    const plans = await prisma.travelNote.findMany({
+    // Retrieve the notes
+    const notes = await prisma.travelNote.findMany({
         where: {
             travelPlanId: planId,
         },
     });
 
-    // Return the plans
-    res.json(plans);
+    // Return the notes
+    res.json(notes);
 });
 
 
@@ -97,7 +97,7 @@ travelNoteRouter.get("/:planId", async (req, res) => {
  */
 travelNoteRouter.put("/:noteId", async (req, res) => {
     const { noteId } = req.params;
-    const { content } = req.body;
+    const { title } = req.body;
 
     // Verify user status
     const auth0Id = req.auth.payload.sub;
@@ -107,7 +107,7 @@ travelNoteRouter.put("/:noteId", async (req, res) => {
     };
 
     // Verify required fields
-    if (!content) {
+    if (!title) {
         res.status(400).send("Missing required fields");
         return;
     };
@@ -118,7 +118,7 @@ travelNoteRouter.put("/:noteId", async (req, res) => {
             id: parseInt(noteId),
         },
         data: {
-            content,
+            title,
         },
     });
     res.json(plan);
