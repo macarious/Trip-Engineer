@@ -1,13 +1,17 @@
 import express from "express";
 import pkg from "@prisma/client";
-import * as dotenv from 'dotenv'
+import * as dotenv from 'dotenv';
+import isNoteBelongsToUser from "./util/isNoteBelongsToUser.js";
+import isPlanBelongsToUser from "./util/isPlanBelongsToUser.js";
+import userStatusVerified from "./util/verifyUser.js";
+
 
 dotenv.config()
 const travelNoteRouter = express.Router();
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 
-// (Later: include checks for the owner of travel plan)
+// (Later: include checks to see whether plan belongs to user)
 
 /**
  * CREATE -- create a note
@@ -17,9 +21,7 @@ travelNoteRouter.post("/:planId", async (req, res) => {
     const { title } = req.body;
 
     // Verify user status
-    const auth0Id = req.auth.payload.sub;
-    if (!auth0Id) {
-        res.status(401).send("Unauthorized");
+    if (!userStatusVerified(req, res)) {
         return;
     };
 
@@ -49,9 +51,7 @@ travelNoteRouter.get("/:noteId", async (req, res) => {
     const { noteId } = req.params;
 
     // Verify user status
-    const auth0Id = req.auth.payload.sub;
-    if (!auth0Id) {
-        res.status(401).send("Unauthorized");
+    if (!userStatusVerified(req, res)) {
         return;
     };
 
@@ -62,7 +62,12 @@ travelNoteRouter.get("/:noteId", async (req, res) => {
         },
     });
 
-    // Return the plan
+    // Verify ownership of note
+    if (!isNoteBelongsToUser(req, res, note)) {
+        return;
+    };
+
+    // Return the note
     res.json(note);
 });
 
@@ -74,9 +79,19 @@ travelNoteRouter.get("/:planId", async (req, res) => {
     const { planId } = req.params;
 
     // Verify user status
-    const auth0Id = req.auth.payload.sub;
-    if (!auth0Id) {
-        res.status(401).send("Unauthorized");
+    if (!userStatusVerified(req, res)) {
+        return;
+    };
+
+    // Retrieve the plan which the note belongs to
+    const plan = await prisma.travelPlan.findUnique({
+        where: {
+            id: parseInt(planId),
+        },
+    });
+
+    // Verify ownership of plan
+    if (!isPlanBelongsToUser(req, res, plan)) {
         return;
     };
 
@@ -100,9 +115,7 @@ travelNoteRouter.put("/:noteId", async (req, res) => {
     const { title } = req.body;
 
     // Verify user status
-    const auth0Id = req.auth.payload.sub;
-    if (!auth0Id) {
-        res.status(401).send("Unauthorized");
+    if (!userStatusVerified(req, res)) {
         return;
     };
 
@@ -112,8 +125,20 @@ travelNoteRouter.put("/:noteId", async (req, res) => {
         return;
     };
 
+    // Retrieve the note
+    const note = await prisma.travelNote.findUnique({
+        where: {
+            id: parseInt(noteId),
+        },
+    });
+
+    // Verify ownership of note
+    if (!isNoteBelongsToUser(req, res, note)) {
+        return;
+    };
+    
     // Update the note
-    const plan = await prisma.travelNote.update({
+    plan = await prisma.travelNote.update({
         where: {
             id: parseInt(noteId),
         },
@@ -132,19 +157,32 @@ travelNoteRouter.delete("/:noteId", async (req, res) => {
     const { noteId } = req.params;
 
     // Verify user status
-    const auth0Id = req.auth.payload.sub;
-    if (!auth0Id) {
-        res.status(401).send("Unauthorized");
+    if (!userStatusVerified(req, res)) {
         return;
     };
 
-    // Delete the note
-    const plan = await prisma.travelNote.delete({
+    // Retrieve the note
+    const note = await prisma.travelNote.findUnique({
         where: {
             id: parseInt(noteId),
         },
     });
-    res.json(plan);
+
+    // Verify ownership of note
+    if (!isNoteBelongsToUser(req, res, note)) {
+        return;
+    };
+
+    // Delete the note
+    const deteledNote = await prisma.travelNote.delete({
+        where: {
+            id: parseInt(noteId),
+        },
+    });
+
+    // Return the deleted note
+    res.json(deteledNote);
 });
+
 
 export default travelNoteRouter;

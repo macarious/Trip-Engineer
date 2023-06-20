@@ -3,9 +3,9 @@ import express from "express";
 import pkg from "@prisma/client";
 import morgan from "morgan";
 import cors from "cors";
-import requireAuth from "./auth.js";
+import requireAuth from "./util/requireAuth.js";
 import travelPlanRouter from "./travelplan.js";
-import travelNoteRouter from "./note.js";
+import travelNoteRouter from "./travelNote.js";
 import generatorRouter from "./generator.js";
 
 dotenv.config();

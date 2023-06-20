@@ -1,8 +1,10 @@
 import express from "express";
 import pkg from "@prisma/client";
-import * as dotenv from 'dotenv'
+import * as dotenv from 'dotenv';
+import isPlanBelongsToUser from "./util/isPlanBelongsToUser.js";
+import userStatusVerified from "./util/verifyUser.js";
 
-dotenv.config()
+dotenv.config();
 const travelPlanRouter = express.Router();
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
@@ -13,9 +15,7 @@ const prisma = new PrismaClient();
  */
 travelPlanRouter.post("/", async (req, res) => {
     // Verify user status
-    const auth0Id = req.auth.payload.sub;
-    if (!auth0Id) {
-        res.status(401).send("Unauthorized");
+    if (!userStatusVerified(req, res)) {
         return;
     };
 
@@ -48,9 +48,7 @@ travelPlanRouter.post("/", async (req, res) => {
  */
 travelPlanRouter.get("/:id", async (req, res) => {
     // Verify user status
-    const auth0Id = req.auth.payload.sub;
-    if (!auth0Id) {
-        res.status(401).send("Unauthorized");
+    if (!userStatusVerified(req, res)) {
         return;
     };
 
@@ -60,6 +58,11 @@ travelPlanRouter.get("/:id", async (req, res) => {
             id: parseInt(id),
         },
     });
+
+    // Verify ownership of plan
+    if (!isPlanBelongsToUser(req, res, plan)) {
+        return;
+    };
 
     // Return the plan
     res.json(plan);
@@ -71,13 +74,12 @@ travelPlanRouter.get("/:id", async (req, res) => {
  */
 travelPlanRouter.get("/", async (req, res) => {
     // Verify user status
-    const auth0Id = req.auth.payload.sub;
-    if (!auth0Id) {
-        res.status(401).send("Unauthorized");
+    if (!userStatusVerified(req, res)) {
         return;
     };
 
     // Retrieve the user
+    auth0Id = req.auth.payload.sub;
     const user = await prisma.user.findUnique({
         where: {
             auth0Id,
@@ -105,16 +107,21 @@ travelPlanRouter.get("/", async (req, res) => {
  */
 travelPlanRouter.put("/:id", async (req, res) => {
     // Verify user status
-    const auth0Id = req.auth.payload.sub;
-    if (!auth0Id) {
-        res.status(401).send("Unauthorized");
+    if (!userStatusVerified(req, res)) {
         return;
     };
 
-    // Verify required fields
     const { id } = req.params;
     const { travelPlan } = req.body;
-    const plan = await prisma.travelPlan.update({
+
+    // Verify required fields
+    if (!travelPlan) {
+        res.status(400).send("Missing required fields");
+        return;
+    };
+
+    // Retrieve the plan
+    const plan = await prisma.travelPlan.findUnique({
         where: {
             id: parseInt(id),
         },
@@ -122,7 +129,24 @@ travelPlanRouter.put("/:id", async (req, res) => {
             plan: travelPlan
         },
     });
-    res.json(plan);
+
+    // Verify ownership of plan
+    if (!isPlanBelongsToUser(req, res, plan)) {
+        return;
+    };
+
+    // Update the plan
+    const updatedPlan = await prisma.travelPlan.update({
+        where: {
+            id: parseInt(id),
+        },
+        data: {
+            plan: travelPlan
+        },
+    });
+
+    // Return the updated plan
+    res.json(updatedPlan);
 });
 
 
@@ -130,19 +154,34 @@ travelPlanRouter.put("/:id", async (req, res) => {
  * DELETE -- delete a plan by id
  */
 travelPlanRouter.delete("/:id", async (req, res) => {
-    const auth0Id = req.auth.payload.sub;
-    if (!auth0Id) {
-        res.status(401).send("Unauthorized");
+    // Verify user status
+    if (!userStatusVerified(req, res)) {
         return;
     };
-
+    
     const { id } = req.params;
-    const plan = await prisma.travelPlan.delete({
+
+    // Retrieve the plan
+    const plan = await prisma.travelPlan.findUnique({
         where: {
             id: parseInt(id),
         },
     });
-    res.json(plan);
+
+    // Verify ownership of plan
+    if (!isPlanBelongsToUser(req, res, plan)) {
+        return;
+    };
+
+    // Delete the plan
+    const deletedPlan = await prisma.travelPlan.delete({
+        where: {
+            id: parseInt(id),
+        },
+    });
+
+    // Return the deleted plan
+    res.json(deletedPlan);
 });
 
 export default travelPlanRouter;
