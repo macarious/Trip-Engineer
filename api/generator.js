@@ -1,10 +1,8 @@
 import * as dotenv from 'dotenv';
 import express from "express";
-import { useState } from "react";
 
 dotenv.config();
 const generatorRouter = express.Router();
-const { travelPlan, setTravelPlan } = useState();
 
 /**
  * POST -- Generate a schedule from OpenAI
@@ -35,10 +33,9 @@ generatorRouter.post("/", async (req, res) => {
     console.log(`Prompt: ${prompt}`);
 
     // Construct the function to be called by the API
-    // (Later: try using setTravelPlan directly instead of saveTravelPlan)
-    function saveTravelPlan(newTravelPlan) {
-        setTravelPlan(newTravelPlan);
+    function extractTravelPlan(newTravelPlan) {
         console.log(`New Travel Plan Generated: ${newTravelPlan}`);
+        return newTravelPlan;
     };
 
     // Construct the body to be sent to the API
@@ -50,10 +47,10 @@ generatorRouter.post("/", async (req, res) => {
             "content": prompt
             }
         ],
-        "functions": [
+        "function_call": [
             {
-                "name": "saveTravelPlan",
-                "description": "Generate a travel plan",
+                "name": "extractTravelPlan",
+                "description": "Extract the travel plan details from the input",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -69,25 +66,26 @@ generatorRouter.post("/", async (req, res) => {
                                     "properties": {
                                         "timeOfDay": {
                                             "type": "string",
-                                            "description": "The start time of the activity"
+                                            "description": "The start time of the activity (ex. 4:00 AM)"
                                         },
                                         "activityName": {
                                             "type": "string",
-                                            "description": "The name of the activity"
+                                            "description": "The name of the activity (ex. Evening stroll in Stanley Park)"
                                         },
                                         "description": {
                                             "type": "string",
-                                            "description": "The description of the activity"
+                                            "description": "The description of the activity (ex. Enjoy the sunset and the view of the city)"
                                         },
                                         "address": {
                                             "type": "string",
-                                            "description": "The address of the activity"
+                                            "description": "The address of the activity (ex. 2099 Beach Ave, Vancouver, BC V6G 1Z4)"
                                         }
                                     }
                                 }
                             }
                         }
-                    }
+                    },
+                    "required": ["travelPlan"]
                 }
             }
         ],
@@ -115,9 +113,7 @@ generatorRouter.post("/", async (req, res) => {
     .catch(error => console.log('error', error));
 
     // Return the travelPlan
-    // (Later: try not declaring a newTravelPlan and see if it still works)
-    const newTravelPlan = travelPlan;
-    res.json(newTravelPlan);
+    res.json(generatedTravelPlan);
 });
 
 export default generatorRouter;

@@ -13,6 +13,39 @@ const prisma = new PrismaClient();
 
 // (Later: include checks to see whether plan belongs to user)
 
+
+// API that creates a new travel note in the database
+
+travelNoteRouter.post("/", async (req, res) => {
+    const { title, travelPlanId } = req.body;
+    
+    // Verify user status
+    if (!userStatusVerified(req, res)) {
+        return;
+    };
+    
+    // Verify required fields
+    if (!title || !travelPlanId) {
+        res.status(400).send("Missing required fields");
+        return;
+    };
+
+    // Create the note
+    const note = await prisma.travelNote.create({
+        data: {
+            title,
+            travelPlan: { connect: { id: travelPlanId } },
+        },
+    });
+
+    // Return the note
+    res.status(201).json(note);
+});
+
+
+
+
+
 /**
  * CREATE -- create a note
  */

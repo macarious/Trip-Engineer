@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuthToken } from "../AuthTokenContext";
 
+// Custom hook to fetch and store travel plans
 export default function useTravelPlans() {
     const [travelPlans, setTravelPlans] = useState([]);
     const { accessToken } = useAuthToken();
