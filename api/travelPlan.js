@@ -2,7 +2,7 @@ import express from "express";
 import pkg from "@prisma/client";
 import * as dotenv from 'dotenv';
 import isPlanBelongsToUser from "./util/isPlanBelongsToUser.js";
-import userStatusVerified from "./util/verifyUser.js";
+import userStatusVerified from "./util/verifyUserStatus.js";
 
 dotenv.config();
 const travelPlanRouter = express.Router();
@@ -14,14 +14,18 @@ const prisma = new PrismaClient();
  * CREATE -- create a plan with only metadata
  */
 travelPlanRouter.post("/", async (req, res) => {
+    const auth0Id = req.auth.payload.sub;
+
     // Verify user status
     if (!userStatusVerified(req, res)) {
         return;
     };
 
+    console.log(req.body);
+
     // Verify required fields
-    const { location, durationDays, arrivalTime, departureTime, hasCar, userId } = req.body;
-    if (!location || !durationDays || !arrivalTime || !departureTime || !hasCar || !userId) {
+    const { location, durationDays, arrivalTime, departureTime, hasCar } = req.body;
+    if (!location || !durationDays || !arrivalTime || !departureTime || !hasCar) {
         res.status(400).send("Missing required fields");
         return;
     };
@@ -34,7 +38,7 @@ travelPlanRouter.post("/", async (req, res) => {
             arrivalTime,
             departureTime,
             hasCar,
-            user: { connect: { id: auth0Id } },
+            user: { connect: { auth0Id: auth0Id } },
         },
     });
 

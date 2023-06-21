@@ -112,6 +112,8 @@ generatorRouter.post("/", async (req, res) => {
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
 
+    console.log(response);
+
     // Return the travelPlan
     const { choices } = response;
     const newTravelPlan = choices[0].messages.function_call.arguments;

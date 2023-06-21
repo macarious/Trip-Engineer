@@ -26,11 +26,11 @@ app.get("/ping", (req, res) => {
 
 
 // Travel Plans related endpoints -- create, retrieve, update, delete a travel plan
-app.use("/travelplan", requireAuth, travelPlanRouter);
+app.use("/plan", requireAuth, travelPlanRouter);
 
 
 // Travel Notes related endpoints -- create, retrieve, update, delete a travel note
-app.use("/travelnote", requireAuth, travelNoteRouter);
+app.use("/note", requireAuth, travelNoteRouter);
 
 
 // Schedule Generation related endpoints -- generate a schedule from OpenAI

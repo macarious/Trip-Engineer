@@ -1,4 +1,4 @@
-import isPlanBelongsToUser from "./isPlanBelongsToUser";
+import isPlanBelongsToUser from "./isPlanBelongsToUser.js";
 
 // This function verifies that if note belongs to user.
 export default async function isNoteBelongsToUser(req, res, note) {

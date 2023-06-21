@@ -1,17 +1,17 @@
-import * as dotenv from 'dotenv';
 import React, { useState } from 'react';
 import { Navigate } from "react-router-dom";
 import { Form, Button, ButtonGroup } from 'react-bootstrap';
+import { useAuthToken } from "../AuthTokenContext";
 
-dotenv.config();
 
 export default function TravelForm() {
 
+    const { accessToken } = useAuthToken();
     const [durationDays, setDurationDays] = useState(1);
     const [hasCar, setHasCar] = useState(true);
     const [formData, setFormData] = useState(
         {
-            destination: "",
+            location: "",
             durationDays: durationDays,
             arrivalTime: "09:00",
             departureTime: "18:00",
@@ -26,16 +26,18 @@ export default function TravelForm() {
             setValidated(true);
             setFormData(
                 {
-                    destination: form.destination.value,
+                    location: form.destination.value,
                     durationDays: durationDays,
                     arrivalTime: form.arrivalTime.value,
                     departureTime: form.departureTime.value,
                     hasCar: hasCar,
                 }
             );
+
             fetch(process.env.REACT_APP_API_URL + "/plan", {
                 method: "POST",
                 headers: {
+                    "Authorization": `Bearer ${accessToken}`,
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(formData),

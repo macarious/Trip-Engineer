@@ -3,7 +3,7 @@ import pkg from "@prisma/client";
 import * as dotenv from 'dotenv';
 import isNoteBelongsToUser from "./util/isNoteBelongsToUser.js";
 import isPlanBelongsToUser from "./util/isPlanBelongsToUser.js";
-import userStatusVerified from "./util/verifyUser.js";
+import userStatusVerified from "./util/verifyUserStatus.js";
 
 
 dotenv.config()

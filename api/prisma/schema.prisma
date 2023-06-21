@@ -21,8 +21,8 @@ model travelPlan {
   id              Int           @id @default(autoincrement())
   location        String        @db.VarChar(31)
   durationDays    Int           
-  arrivalTime     DateTime?
-  departureTime   DateTime?
+  arrivalTime     String        @db.VarChar(31)
+  departureTime   String        @db.VarChar(31)
   hasCar          Boolean       @default(false)
   plan            Json?
   travelNotes     travelNote[]
