@@ -40,9 +40,6 @@ travelNoteRouter.post("/", async (req, res) => {
 });
 
 
-
-
-
 /**
  * CREATE -- create a note
  */
@@ -57,7 +54,7 @@ travelNoteRouter.post("/:planId", async (req, res) => {
 
     // Verify required fields
     if (!title) {
-        res.status(400).send("Missing required fields");
+        res.status(400).send("Missing required fields, title:", title);
         return;
     };
 

@@ -22,11 +22,9 @@ travelPlanRouter.post("/", async (req, res) => {
         return;
     };
 
-    console.log(req.body);
-
     // Verify required fields
     const { location, durationDays, arrivalTime, departureTime, hasCar } = req.body;
-    if (!location || !durationDays || !arrivalTime || !departureTime || !hasCar) {
+    if (!location || !durationDays || !arrivalTime || !departureTime || hasCar === undefined) {
         res.status(400).send("Missing required fields");
         return;
     };
