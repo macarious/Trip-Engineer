@@ -1,4 +1,6 @@
 // This function verifies that if plan belongs to user.
+// Returns true if plan belongs to user, false otherwise.
+// Return error message if plan does not belong to user.
 export default async function isPlanBelongsToUser(req, res, plan) {
     // Retrieve the user which the plan belongs to, and verify if user is the same as the current user
     const user = await prisma.user.findUnique({

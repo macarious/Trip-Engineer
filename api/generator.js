@@ -4,6 +4,8 @@ import express from "express";
 dotenv.config();
 const generatorRouter = express.Router();
 
+// This file contains the endpoints related to schedule generation
+
 /**
  * POST -- Generate a schedule from OpenAI
  */

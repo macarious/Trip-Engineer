@@ -11,10 +11,7 @@ const travelNoteRouter = express.Router();
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 
-// (Later: include checks to see whether plan belongs to user)
-
-
-// API that creates a new travel note in the database
+// This file contains all the endpoints related to travel notes
 
 travelNoteRouter.post("/", async (req, res) => {
     const { title, travelPlanId } = req.body;

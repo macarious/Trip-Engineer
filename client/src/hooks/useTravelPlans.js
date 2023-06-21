@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import { useAuthToken } from "../AuthTokenContext";
 
 // Custom hook to fetch and store travel plans
+// travelPlans are fetched from the API and stored in state when the component mounts or when the accessToken changes
+// travelPlans -- an array of travel plans
+// setTravelPlans -- a function to set the travel plans
+// saveNewTravelPlan -- a function to save a new travel plan to the database
 export default function useTravelPlans() {
     const [travelPlans, setTravelPlans] = useState([]);
     const { accessToken } = useAuthToken();
@@ -9,54 +13,51 @@ export default function useTravelPlans() {
     useEffect(() => {
         // Fetch the travel plans from the API
         async function getTravelPlansFromApi() {
-            try {
-                const response = await fetch(`${process.env.REACT_APP_API_URL}/travelplan`, {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                        "Content-Type": "application/json",
-                    },
+            await fetch(process.env.REACT_APP_API_URL + "/plan", {
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`,
+                    "Content-Type": "application/json",
+                },
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    setTravelPlans(data);
+                    console.log("Retrieved:", data);
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
                 });
-
-                if (response.ok) {
-                    const fetchedTravelPlans = await response.json();
-                    setTravelPlans(fetchedTravelPlans);
-                } else {
-                    console.error("Failed to fetch travel plans");
-                }
-            } catch (error) {
-                console.error("Error fetching travel plans:", error);
-            }
-        }
+        };
 
         // Only fetch travel plans if the user is authenticated
-        if (accessToken) {
-            getTravelPlansFromApi();
-        }
+        if (accessToken) getTravelPlansFromApi();
+
     }, [accessToken]);
 
     // Function to save a travel plan
-    const saveTravelPlan = async (newTravelPlan) => {
-        try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/travelplan`, {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(newTravelPlan),
-            });
-
+    async function saveNewTravelPlan(newTravelPlan) {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/travelplan`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newTravelPlan),
+        })
+        .then((response) => {
             if (response.ok) {
-                const savedTravelPlan = await response.json();
-                setTravelPlans([...travelPlans, savedTravelPlan]);
+                return response.json();
             } else {
-                console.error("Failed to save travel plan");
+                console.error("Response not ok when saving travel plan");
             }
-        } catch (error) {
-            console.error("Error saving travel plan:", error);
-        }
+        })
+        .then((data) => { 
+            setTravelPlans([...travelPlans, data]);
+            console.log("Saved", response);
+        })
+        .catch((error) => console.error("Save Travel Plan Failed:", error));
     };
 
-    // Return the travel plans, setTravelPlans, and saveTravelPlan together
-    return { travelPlans, setTravelPlans, saveTravelPlan };
+    // Return the travel plans, setTravelPlans, and saveNewTravelPlan
+    return { travelPlans, setTravelPlans, saveNewTravelPlan };
 }

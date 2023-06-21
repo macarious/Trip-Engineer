@@ -9,6 +9,7 @@ const travelPlanRouter = express.Router();
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 
+// This file contains all the endpoints related to travel plans
 
 /**
  * CREATE -- create a plan with only metadata

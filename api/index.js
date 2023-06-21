@@ -18,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan("dev"));
 
+// This is the root endpoint
 
 // PING endpoint
 app.get("/ping", (req, res) => {
