@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Navigate } from "react-router-dom";
+import { Navigate, Router } from "react-router-dom";
 import { Form, Button, ButtonGroup } from 'react-bootstrap';
 import { useAuthToken } from "../AuthTokenContext";
-
+import useTravelPlans from "../hooks/useTravelPlans";
 
 export default function TravelForm() {
 
     const { accessToken } = useAuthToken();
+    const [travelPlans, setTravelPlans] = useTravelPlans();
     const [durationDays, setDurationDays] = useState(1);
     const [hasCar, setHasCar] = useState(true);
     const [formData, setFormData] = useState(
@@ -19,21 +20,11 @@ export default function TravelForm() {
     });
     const [validated, setValidated] = useState(false);
 
+    // This function is called when the form is submitted
     function handleFormSubmit(e) {
-        const form = e.target;
         e.preventDefault();
-        if (form.checkValidity() === true) {
+        if (e.target.checkValidity() === true) {
             setValidated(true);
-            setFormData(
-                {
-                    location: form.destination.value,
-                    durationDays: durationDays,
-                    arrivalTime: form.arrivalTime.value,
-                    departureTime: form.departureTime.value,
-                    hasCar: hasCar,
-                }
-            );
-
             fetch(process.env.REACT_APP_API_URL + "/plan", {
                 method: "POST",
                 headers: {
@@ -42,19 +33,27 @@ export default function TravelForm() {
                 },
                 body: JSON.stringify(formData),
             })
-            .then((response) => response.json())
+            .then((response) => {
+                response.json()
+            })
             .then((data) => {
-                console.log("Form Submitted:", data);
+                setTravelPlans([...travelPlans, data]);
+                console.log("Form submitted successfully", formData);
             })
             .catch((error) => {
                 console.error("Error:", error);
+                return;
             });
-            
-            return <Navigate to="/plan/" />;
+
+            return(
+                // (Navigation currently not working)
+                // Navigate to the Saved Plans page
+                <Navigate to="/plan" replace />
+            );
         };
     };
 
-    function handleTimeChange (e) {
+    function handleFieldChange (e) {
         const { name, value } = e.target;
         setFormData((prevFormData) => ({
             ...prevFormData,
@@ -77,14 +76,20 @@ export default function TravelForm() {
             className="d-grid"
             onSubmit={handleFormSubmit}
         >
-            <Form.Group controlId="destination">
-                <Form.Label className="fw-bold mt-3">Destination</Form.Label>
+            <Form.Group controlId="location">
+                <Form.Label
+                    aria-label="Destination"
+                    className="fw-bold mt-3"
+                    >Destination
+                </Form.Label>
                 <Form.Control
+                    name="location"
                     type="text"
                     placeholder="ex. Vancouver, BC"
                     aria-label="Destination"
                     aria-describedby="Enter destination; ex. Vancouver, BC"
                     pattern=".{5,50}"
+                    onChange={handleFieldChange}
                     required
                 />
                 <Form.Control.Feedback type="invalid">Please input a destination (5 to 50 characters)</Form.Control.Feedback>
@@ -116,7 +121,7 @@ export default function TravelForm() {
                     value={formData.arrivalTime}
                     aria-label="Arrival Time"
                     aria-describedby="Enter arrival time of first day"
-                    onChange={handleTimeChange}
+                    onChange={handleFieldChange}
                     required
                 />
                 <Form.Control.Feedback type="invalid">Please select an arrival time</Form.Control.Feedback>
@@ -130,7 +135,7 @@ export default function TravelForm() {
                     value={formData.departureTime}
                     aria-label="Departure Time"
                     aria-describedby="Enter departure time of final day"
-                    onChange={handleTimeChange}
+                    onChange={handleFieldChange}
                     required
                 />
                 <Form.Control.Feedback type="invalid">Please select a departure time</Form.Control.Feedback>

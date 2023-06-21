@@ -24,6 +24,7 @@ travelPlanRouter.post("/", async (req, res) => {
 
     // Verify required fields
     const { location, durationDays, arrivalTime, departureTime, hasCar } = req.body;
+    console.log(req.body);
     if (!location || !durationDays || !arrivalTime || !departureTime || hasCar === undefined) {
         res.status(400).send("Missing required fields");
         return;
@@ -82,7 +83,7 @@ travelPlanRouter.get("/", async (req, res) => {
     };
 
     // Retrieve the user
-    auth0Id = req.auth.payload.sub;
+    const auth0Id = req.auth.payload.sub;
     const user = await prisma.user.findUnique({
         where: {
             auth0Id,

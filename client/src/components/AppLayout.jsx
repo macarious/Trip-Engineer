@@ -6,7 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 export default AppLayout;
 
 function AppLayout() {
-    const { isAuthenticated, user, logout } = useAuth0();
+    const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
     
     return (
         <div>
@@ -16,13 +16,13 @@ function AppLayout() {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
-                        <Nav.Link as={Link} to="/generator">Plan Generator</Nav.Link>
-                        <Nav.Link as={Link} to="/plan">Saved Plans</Nav.Link>
+                        <Nav.Link as={Link} to="/generator" hidden={!isAuthenticated}>Plan Generator</Nav.Link>
+                        <Nav.Link as={Link} to="/plan" hidden={!isAuthenticated}>Saved Plans</Nav.Link>
                 </Nav>
                 <Nav>
                     <Nav.Link as={Link} to="/profile">{user?.name}</Nav.Link>
                     { !isAuthenticated ? (
-                        <Nav.Link as={Link} to="/verify-user">Login</Nav.Link>
+                        <Nav.Link onClick={loginWithRedirect}>Login</Nav.Link>
                     ) : (
                         <Nav.Link onClick={() => logout({ returnTo: window.location.origin })}>Log Out</Nav.Link>
                     )
