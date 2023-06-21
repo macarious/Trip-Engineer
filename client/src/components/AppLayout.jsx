@@ -17,7 +17,7 @@ function AppLayout() {
                 <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
                         <Nav.Link as={Link} to="/generator">Plan Generator</Nav.Link>
-                        <Nav.Link as={Link} to="/plans">Saved Plans</Nav.Link>
+                        <Nav.Link as={Link} to="/plan">Saved Plans</Nav.Link>
                 </Nav>
                 <Nav>
                     <Nav.Link as={Link} to="/profile">{user?.name}</Nav.Link>

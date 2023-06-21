@@ -1,5 +1,9 @@
+import * as dotenv from 'dotenv';
 import React, { useState } from 'react';
+import { Navigate } from "react-router-dom";
 import { Form, Button, ButtonGroup } from 'react-bootstrap';
+
+dotenv.config();
 
 export default function TravelForm() {
 
@@ -29,8 +33,23 @@ export default function TravelForm() {
                     hasCar: hasCar,
                 }
             );
-            console.log("Form submitted");
-        }
+            fetch(process.env.REACT_APP_API_URL + "/plan", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Form Submitted:", data);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+            
+            return <Navigate to="/plan/" />;
+        };
     };
 
     function handleTimeChange (e) {
@@ -120,7 +139,7 @@ export default function TravelForm() {
                     <Button
                         variant={hasCar === true ? "success" : "outline-secondary"}
                         aria-label="Has car"
-                        aria-describedby="Has a car"
+                        aria-describedby="Select if you have a car"
                         onClick={() => handleCarButtonClick(true)}
                         className="w-50 fw-bold"
                     >
@@ -129,7 +148,7 @@ export default function TravelForm() {
                     <Button
                         variant={hasCar === false ? "success" : "outline-secondary"}
                         aria-label="No car"
-                        aria-describedby="Does not have a car"
+                        aria-describedby="Select if you do not have a car"
                         onClick={() => handleCarButtonClick(false)}
                         className="w-50 fw-bold"
                     >

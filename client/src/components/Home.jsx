@@ -19,7 +19,7 @@ export default function Home() {
                     <Button variant="primary" active as={Link} to="/generator">Plan Generator</Button>
                 </Row>
                 <Row>
-                    <Button variant="primary" active as={Link} to="/plans">Saved Plans</Button>
+                    <Button variant="primary" active as={Link} to="/plan">Saved Plans</Button>
                 </Row>
                 <Row>
                     <Button variant="primary" active as={Link} to="/profile">Profile</Button>

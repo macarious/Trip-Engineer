@@ -8,6 +8,7 @@ import AuthDebugger from "./components/AuthDebugger";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import NotFound from "./components/NotFound";
+import TravelPlanDetail from "./components/TravelPlanDetail";
 import Profile from "./components/Profile";
 import SavedPlans from "./components/SavedPlans";
 import PlanGenerator from "./components/PlanGenerator";
@@ -59,7 +60,8 @@ root.render(
                             <Route index element={<Home />} />
                             <Route path="*" element={<NotFound />} />
                             <Route path="profile" element={<Profile />} />
-                            <Route path="plans" element={<SavedPlans />} />
+                            <Route path="plan" element={<SavedPlans />} />
+                            <Route path="plan/:planId" element={<TravelPlanDetail />} />
                             <Route path="generator" element={<PlanGenerator />} />
                             <Route path="debugger" element={<AuthDebugger />} />
                         </Route>

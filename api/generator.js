@@ -8,6 +8,8 @@ const generatorRouter = express.Router();
  * POST -- Generate a schedule from OpenAI
  */
 generatorRouter.post("/", async (req, res) => {
+    const { durationDays, arrivalTime, departureTime, hasCar } = req.body;
+
     // Verify user status
     const auth0Id = req.auth.payload.sub;
     if (!auth0Id) {
@@ -16,7 +18,6 @@ generatorRouter.post("/", async (req, res) => {
     };
 
     // Verify required fields
-    const { durationDays, arrivalTime, departureTime, hasCar } = req.body;
     if (!durationDays || !arrivalTime || !departureTime || !hasCar) {
         res.status(400).send("Missing required fields");
         return;
@@ -34,8 +35,7 @@ generatorRouter.post("/", async (req, res) => {
 
     // Construct the function to be called by the API
     function extractTravelPlan(newTravelPlan) {
-        console.log(`New Travel Plan Generated: ${newTravelPlan}`);
-        return newTravelPlan;
+        console.log("Travel Plan Generated", newTravelPlan);
     };
 
     // Construct the body to be sent to the API
@@ -47,7 +47,7 @@ generatorRouter.post("/", async (req, res) => {
             "content": prompt
             }
         ],
-        "function_call": [
+        "functions": [
             {
                 "name": "extractTravelPlan",
                 "description": "Extract the travel plan details from the input",
@@ -62,7 +62,7 @@ generatorRouter.post("/", async (req, res) => {
                                 "description": "A daily plan; an array of activities",
                                 "items": {
                                     "type": "object",
-                                    "description": "An activity",
+                                    "description": "An activity in a daily plan",
                                     "properties": {
                                         "timeOfDay": {
                                             "type": "string",
@@ -107,13 +107,15 @@ generatorRouter.post("/", async (req, res) => {
     };
 
     // Call Open AI API to set travelPlan
-    fetch(process.env.OPENAI_API_URL, requestOptions)
-    .then(response => response.text())
+    const response = await fetch(process.env.OPENAI_API_URL, requestOptions)
+    .then(response => response.json())
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
 
     // Return the travelPlan
-    res.json(generatedTravelPlan);
+    const { choices } = response;
+    const newTravelPlan = choices[0].messages.function_call.arguments;
+    res.json(newTravelPlan);
 });
 
 export default generatorRouter;
