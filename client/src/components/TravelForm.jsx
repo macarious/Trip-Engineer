@@ -161,7 +161,8 @@ export default function TravelForm() {
             <Form
                 noValidate
                 validated={validated}
-                className="d-grid"
+                className="d-flex flex-column mx-auto"
+                style={{ maxWidth: '450px' }}
                 onSubmit={handleFormSubmit}
             >
                 <Form.Group controlId="location">
@@ -282,7 +283,7 @@ export default function TravelForm() {
             </Form>
 
             {generatedPlan && (
-                <Row xs={1} md={2}>
+                <Row xs={1}>
                     {generatedPlan.map((dayActivities, dayIndex) => (
                         <Col key={dayIndex}>   
                             <Card>

@@ -4,13 +4,13 @@ import TravelForm from "./TravelForm";
 
 export default function PlanGenerator() {
     return (
-        <Container style={{ marginTop: '5%', maxWidth: '400px' }} className="d-flex flex-column">
-            <div className="d-grid gap-2">
-                <Row className="mx-auto">
-                    <h3>Plan Generator</h3>
+        <Container style={{ maxWidth: '1024px' }} className="d-flex flex-column my-3">
+            <div>
+                <Row>
+                    <h1 className="text-center">Plan Generator</h1>
                 </Row>
                 <Row>
-                    <TravelForm></TravelForm>
+                    <TravelForm />
                 </Row>
             </div>
         </ Container>
