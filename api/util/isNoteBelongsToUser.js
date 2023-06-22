@@ -1,4 +1,8 @@
+import pkg from "@prisma/client";
 import isPlanBelongsToUser from "./isPlanBelongsToUser.js";
+
+const { PrismaClient } = pkg;
+const prisma = new PrismaClient();
 
 // This function verifies that if note belongs to user.
 // Returns true if note belongs to user, false otherwise.

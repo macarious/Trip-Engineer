@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navigate, Router } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Form, Button, ButtonGroup } from 'react-bootstrap';
 import { useAuthToken } from "../AuthTokenContext";
 import useTravelPlans from "../hooks/useTravelPlans";
@@ -8,6 +8,7 @@ export default function TravelForm() {
 
     const { accessToken } = useAuthToken();
     const [travelPlans, setTravelPlans] = useTravelPlans();
+    const [generatedPlan, setGeneratedPlan] = useState("");
     const [durationDays, setDurationDays] = useState(1);
     const [hasCar, setHasCar] = useState(true);
     const [formData, setFormData] = useState(
@@ -17,40 +18,119 @@ export default function TravelForm() {
             arrivalTime: "09:00",
             departureTime: "18:00",
             hasCar: hasCar,
+            plan: []
     });
     const [validated, setValidated] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    // This function is called when plan generation is unsuccessful
+    function unsuccessfulOutcome() {
+        alert("Error: Failed to generate plan");
+        setLoading(false);
+        return;
+    };
+
+    // This function is called when plan generation is successful
+    function successfulOutcome() {
+        alert("Plan generated successfully. Plans can be found in the \"Saved Plans\" page.");
+        setLoading(false);
+    };
 
     // This function is called when the form is submitted
-    function handleFormSubmit(e) {
+    async function handleFormSubmit(e) {
         e.preventDefault();
-        if (e.target.checkValidity() === true) {
-            setValidated(true);
-            fetch(process.env.REACT_APP_API_URL + "/plan", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${accessToken}`,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            })
-            .then((response) => {
-                response.json()
-            })
-            .then((data) => {
-                setTravelPlans([...travelPlans, data]);
-                console.log("Form submitted successfully", formData);
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-                return;
-            });
+        const form = e.target;
 
-            return(
-                // (Navigation currently not working)
-                // Navigate to the Saved Plans page
-                <Navigate to="/plan" replace />
-            );
+        // Show the user that the form is being validated
+        setValidated(true);
+
+        // Check if the form is valid
+        if (!form.checkValidity()) {
+            e.stopPropagation();
+            setLoading(false);
+            return;
         };
+
+        // If the form is valid, set validated to true
+        setLoading(true);
+        console.log("Form is valid. Now submitting:", formData);
+
+        // Send a POST request to the API to generate a travel plan
+        const newPlan = await fetch(process.env.REACT_APP_API_URL + "/generator", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+        })
+        .then((response) => response.json())
+        .catch((error) => {
+            unsuccessfulOutcome()
+            return;
+        });
+
+        if (!newPlan) {
+            unsuccessfulOutcome()
+            return;
+        };
+
+        // Send a POST request to the API to save the travel plan to the database
+        const newTravelPlan = await fetch(process.env.REACT_APP_API_URL + "/plan", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+        })
+        .then((response) => response.json())
+        .catch((error) => {
+            unsuccessfulOutcome()
+            return;
+        });
+
+        if (!newTravelPlan) {
+            unsuccessfulOutcome()
+            return;
+        };
+
+        // Send a PUT request to insert the new travel plan array to the existing travel plan in the database
+        const travelPlanId = newTravelPlan.id;
+        const updatedTravelPlan = await fetch(process.env.REACT_APP_API_URL + `/plan/${travelPlanId}`, {
+            method: "PUT",
+            headers: {
+                "Authorization": `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newPlan),
+        })
+        .then((response) => response.json())
+        .catch((error) => {
+            unsuccessfulOutcome()
+            return;
+        });
+
+        if (!updatedTravelPlan) {
+            unsuccessfulOutcome()
+            return;
+        };
+
+        // If the travel plans are updated properly, update the TravelPlans
+        setTravelPlans(updatedTravelPlan);
+        setGeneratedPlan(newPlan);
+        console.log("Existing saved travel plans:", travelPlans);
+        console.log("New travel plan successfully added", updatedTravelPlan);
+        successfulOutcome();
+
+        return(
+            // (Navigation currently not working)
+            // Navigate to the Saved Plans page
+            <div className="d-flex align-items-center justify-content-center my-4">
+                Success!
+                <Navigate to="/plan" replace /> 
+            </div>
+        );
     };
 
     function handleFieldChange (e) {
@@ -63,10 +143,18 @@ export default function TravelForm() {
 
     function handleDurationButtonClick (value) {
         setDurationDays(value);
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            durationDays: value,
+        }));
     };
 
     function handleCarButtonClick (value) {
         setHasCar(value);
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            hasCar: value,
+        }));
     };
 
     return (
@@ -87,7 +175,7 @@ export default function TravelForm() {
                     type="text"
                     placeholder="ex. Vancouver, BC"
                     aria-label="Destination"
-                    aria-describedby="Enter destination; ex. Vancouver, BC"
+                    aria-describedby="Enter destination; ex. Vancouver, BC or Sydney, Australia"
                     pattern=".{5,50}"
                     onChange={handleFieldChange}
                     required
@@ -171,8 +259,9 @@ export default function TravelForm() {
                     aria-describedby="Generate a vacation plan"
                     variant="primary"
                     className="w-50"
+                    disabled={loading}
                 >
-                    GENERATE
+                    {loading ? "GENERATING..." : "GENERATE"}
                 </Button>
             </div>
         </Form>

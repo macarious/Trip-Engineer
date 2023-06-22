@@ -1,3 +1,8 @@
+import pkg from "@prisma/client";
+
+const { PrismaClient } = pkg;
+const prisma = new PrismaClient();
+
 // This function verifies that if plan belongs to user.
 // Returns true if plan belongs to user, false otherwise.
 // Return error message if plan does not belong to user.

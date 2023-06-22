@@ -116,7 +116,7 @@ travelPlanRouter.put("/:id", async (req, res) => {
     };
 
     const { id } = req.params;
-    const { travelPlan } = req.body;
+    const travelPlan = req.body;
 
     // Verify required fields
     if (!travelPlan) {
@@ -128,9 +128,6 @@ travelPlanRouter.put("/:id", async (req, res) => {
     const plan = await prisma.travelPlan.findUnique({
         where: {
             id: parseInt(id),
-        },
-        data: {
-            plan: travelPlan
         },
     });
 

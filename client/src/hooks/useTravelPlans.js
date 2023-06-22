@@ -3,8 +3,6 @@ import { useAuthToken } from "../AuthTokenContext";
 
 // Custom hook to fetch and store travel plans
 // travelPlans are fetched from the API and stored in state when the component mounts or when the accessToken changes
-// travelPlans -- an array of travel plans
-// setTravelPlans -- a function to set the travel plans
 export default function useTravelPlans() {
     const [travelPlans, setTravelPlans] = useState([]);
     const { accessToken } = useAuthToken();
@@ -33,6 +31,6 @@ export default function useTravelPlans() {
 
     }, [accessToken]);
 
-    // Return the travel plans, setTravelPlans, and saveNewTravelPlan
+    // Return the travel plans and setTravelPlans
     return [travelPlans, setTravelPlans];
 }
