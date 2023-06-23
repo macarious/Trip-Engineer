@@ -8,7 +8,7 @@ export default function useTravelPlans() {
     const { accessToken } = useAuthToken();
 
     useEffect(() => {
-        // Fetch the travel plans from the API
+        // Fetch the travel plans from the API endpoint
         async function getTravelPlansFromApi() {
             await fetch(process.env.REACT_APP_API_URL + "/plan", {
                 headers: {

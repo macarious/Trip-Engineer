@@ -33,7 +33,7 @@ generatorRouter.post("/", async (req, res) => {
     headers.append("Authorization", process.env.OPENAI_TOKEN);
 
     // Construct the prompt to be sent to the API
-    const prompt = `Create a concise trip schedule for a self-guided tour in ${location}. ${ hasCar? "Car" : "No car" } available. Trip starts on day 1 at ${ arrivalTime }, and ends on day ${ durationDays } at ${ departureTime }. Consider commuting time to/from airport. Include arrival and departure as activity. For each day, suggest a maximum of 5 activities. For each activity, provide start time, short description of activity, and address. Each day, visit a different geographical area. Activities may include sightseeing, shopping, cultural/recreational activities, enjoying local cuisine, and visiting coffee shops. Do not suggest hotel. Utilize local knowledge.`
+    const prompt = `Create a concise trip schedule for a self-guided tour in ${location}. ${ hasCar? "Car" : "No car" } available. Trip starts on day 1 at ${ arrivalTime }, and ends on day ${ durationDays } at ${ departureTime }. Include arrival as first activity on day 1 and departure as final activity on day ${ durationDays }. For each day, suggest a maximum of 6 activities. For each activity, provide start time, name of activity (including the type of activity and the location), short description of activity (two sentences), and address. Each day, visit a different geographical area. Activities may include sightseeing, shopping, cultural/recreational activities, enjoying local cuisine, and visiting coffee shops. Do not suggest hotel. Utilize local knowledge.`
     console.log(`Prompt: ${prompt}`);
 
     // // Construct the function to be called by the API
@@ -69,19 +69,19 @@ generatorRouter.post("/", async (req, res) => {
                                     "properties": {
                                         "timeOfDay": {
                                             "type": "string",
-                                            "description": "The start time of the activity (ex. 4:00 AM)"
+                                            "description": "The start time of the activity (ex. 13:00)"
                                         },
                                         "activityName": {
                                             "type": "string",
-                                            "description": "The name of the activity (ex. Evening stroll in Stanley Park)"
+                                            "description": "Include the name of activity and its location (ex. Evening stroll in Stanley Park)"
                                         },
                                         "description": {
                                             "type": "string",
-                                            "description": "The description of the activity (ex. Enjoy the sunset and the view of the city)"
+                                            "description": "Two sentences describing the activity (ex. Visit the famous park, walk along the seawall, and enjoy the scenic views of the city and surrounding nature. From the captivating Totem Poles and breathtaking views at Prospect Point to the serene Beaver Lake and scenic seawall, Stanley Park offers an unforgettable experience where you can immerse yourself in the splendor of nature while exploring its rich cultural heritage.)"
                                         },
                                         "address": {
                                             "type": "string",
-                                            "description": "The address of the activity (ex. 2099 Beach Ave, Vancouver, BC V6G 1Z4)"
+                                            "description": "The address of the activity (ex. 2099 Beach Ave, Vancouver, BC V6G 1Z4); if activity has no specific address, return the city name instead (ex. Vancouver, BC)"
                                         }
                                     }
                                 }

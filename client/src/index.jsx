@@ -49,25 +49,25 @@ root.render(
             scope: requestedScopes.join(" "),
         }}
         >
-        <AuthTokenProvider>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/verify-user" element={<VerifyUser />} />
-                    <Route path="/login" element={<AppLayout />}>
-                        <Route index element={<Login />} />
-                    </Route>
-                    <Route path="/" element={<RequireAuth><AppLayout /></RequireAuth>}>
-                        <Route index element={<Home />} />
-                        <Route path="*" element={<NotFound />} />
-                        <Route path="profile" element={<Profile />} />
-                        <Route path="plan" element={<SavedPlans />} />
-                        <Route path="plan/:planId" element={<TravelPlanDetail />} />
-                        <Route path="generator" element={<PlanGenerator />} />
-                        <Route path="debugger" element={<AuthDebugger />} />
-                    </Route>
-                </Routes>
-            </BrowserRouter>
-        </AuthTokenProvider>
+            <AuthTokenProvider>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/verify-user" element={<VerifyUser />} />
+                        <Route path="/login" element={<AppLayout />}>
+                            <Route index element={<Login />} />
+                        </Route>
+                        <Route path="/" element={<RequireAuth><AppLayout /></RequireAuth>}>
+                            <Route index element={<Home />} />
+                            <Route path="*" element={<NotFound />} />
+                            <Route path="profile" element={<Profile />} />
+                            <Route path="plan" element={<SavedPlans />} />
+                            <Route path="plan/:planId" element={<TravelPlanDetail />} />
+                            <Route path="generator" element={<PlanGenerator />} />
+                            <Route path="debugger" element={<AuthDebugger />} />
+                        </Route>
+                    </Routes>
+                </BrowserRouter>
+            </AuthTokenProvider>
         </Auth0Provider>
     </React.StrictMode>
 );

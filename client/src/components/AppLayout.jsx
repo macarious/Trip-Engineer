@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Outlet, Link } from "react-router-dom";
-import { Nav, Navbar, Container } from 'react-bootstrap';
+import { Container, Nav, Navbar, } from 'react-bootstrap';
 import { useAuth0 } from "@auth0/auth0-react";
 
 export default AppLayout;
@@ -32,9 +32,16 @@ function AppLayout() {
             </Container>
             </Navbar>
             <div className="content">
-                {/* https://reactrouter.com/en/main/components/outlet */}
                 <Outlet />
             </div>
+            {/* Footer containing site information */}
+            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="bottom" style={{left: 0, bottom: 0, width: "100%", position: "fixed"}}>
+            <Container>
+                    <Nav className="me-auto">
+                        <Nav.Link as={Link} to="/">&copy; 2021 Trip Engineer</Nav.Link>
+                    </Nav>
+                </Container>
+            </Navbar>
         </div>
     );
 }

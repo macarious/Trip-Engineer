@@ -56,6 +56,8 @@ travelPlanRouter.get("/:id", async (req, res) => {
         return;
     };
 
+    const { id } = req.params;
+
     // Retrieve the plan
     const plan = await prisma.travelPlan.findUnique({
         where: {
