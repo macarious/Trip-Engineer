@@ -1,5 +1,5 @@
 import React, { useParams } from "react-router-dom";
-import { Card, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import { useAuthToken } from "../AuthTokenContext";
 import { useState, useEffect } from "react";
 import TravelPlanCardGroup from "./TravelPlanCardGroup";
