@@ -6,7 +6,7 @@ export default function AuthDebugger() {
   const { accessToken } = useAuthToken();
 
   return (
-    <div>
+    <div className="m-3">
       <div>
         <p>Access Token:</p>
         <pre>{JSON.stringify(accessToken, null, 2)}</pre>

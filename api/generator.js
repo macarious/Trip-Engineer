@@ -33,7 +33,7 @@ generatorRouter.post("/", async (req, res) => {
     headers.append("Authorization", process.env.OPENAI_TOKEN);
 
     // Construct the prompt to be sent to the API
-    const prompt = `Create a concise trip schedule for a self-guided tour in ${location}. ${ hasCar? "Car" : "No car" } available. Trip starts on day 1 at ${ arrivalTime }, and ends on day ${ durationDays } at ${ departureTime }. Include arrival as first activity on day 1 and departure as final activity on day ${ durationDays }. For each day, suggest a maximum of 6 activities. For each activity, provide start time, name of activity (including the type of activity and the location), short description of activity (two sentences), and address. Each day, visit a different geographical area. Activities may include sightseeing, shopping, cultural/recreational activities, enjoying local cuisine, and visiting coffee shops. Do not suggest hotel. Utilize local knowledge.`
+    const prompt = `Create a concise trip schedule for a self-guided tour in ${location}. ${ hasCar? "Car" : "No car" } available. Trip starts on day 1 at ${ arrivalTime }, and ends on day ${ durationDays } at ${ departureTime }. Include arrival as first activity on day 1 and departure as final activity on day ${ durationDays }. For each day, suggest a maximum of 5 activities. For each activity, provide start time, title of activity (including the name or type of activity and the location), short description of activity (two sentences), and address. Each day, visit a different geographical area. The type of activities may include sightseeing, shopping, local markets, museums, recreation, local cuisine at a specific restaurant, theme parks, attractions, and outdoor activities. Do not suggest hotel. Utilize local knowledge.`
     console.log(`Prompt: ${prompt}`);
 
     // // Construct the function to be called by the API
@@ -59,7 +59,7 @@ generatorRouter.post("/", async (req, res) => {
                     "properties": {
                         "travelPlan": {
                             "type": "array",
-                            "description": "An array of daily schedules, number of items in array equals to the number of days",
+                            "description": `An array of daily schedules, there are ${durationDays} items in this array (one item for each day)`,
                             "items": {
                                 "type": "array",
                                 "description": "A daily plan; an array of activities, maximum number of items in array equals to 5",
@@ -73,7 +73,7 @@ generatorRouter.post("/", async (req, res) => {
                                         },
                                         "activityName": {
                                             "type": "string",
-                                            "description": "Include the name of activity and its location (ex. Evening stroll in Stanley Park)"
+                                            "description": "Must include both the name of activity and its location (ex. Evening stroll in Stanley Park)"
                                         },
                                         "description": {
                                             "type": "string",
@@ -81,7 +81,7 @@ generatorRouter.post("/", async (req, res) => {
                                         },
                                         "address": {
                                             "type": "string",
-                                            "description": "The address of the activity (ex. 2099 Beach Ave, Vancouver, BC V6G 1Z4); if activity has no specific address, return the city name instead (ex. Vancouver, BC)"
+                                            "description": "The address of the activity (ex. 2099 Beach Ave, Vancouver, BC V6G 1Z4); if activity has no proper of structured address format, return the city name instead (ex. Vancouver, BC)"
                                         }
                                     }
                                 }
@@ -120,6 +120,7 @@ generatorRouter.post("/", async (req, res) => {
     };
 
     // Return the travelPlan
+    console.log(response);  
     const { choices } = response;
     const travelPlanObject = JSON.parse(choices[0].message.function_call.arguments);
     const generatedPlan = travelPlanObject.travelPlan;

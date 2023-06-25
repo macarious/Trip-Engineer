@@ -31,7 +31,7 @@ travelNoteRouter.post("/", async (req, res) => {
     const note = await prisma.travelNote.create({
         data: {
             title,
-            travelPlan: { connect: { id: travelPlanId } },
+            travelPlan: { connect: { id: parseInt(planId) } },
         },
     });
 
@@ -47,10 +47,16 @@ travelNoteRouter.post("/:planId", async (req, res) => {
     const { planId } = req.params;
     const { title } = req.body;
 
+    console.log("1 planId:", planId);
+    console.log("1 title", title);
     // Verify user status
     if (!userStatusVerified(req, res)) {
         return;
     };
+    
+    console.log("2 planId:", planId);
+    console.log("2 title", title);
+
 
     // Verify required fields
     if (!title) {
@@ -62,7 +68,7 @@ travelNoteRouter.post("/:planId", async (req, res) => {
     const note = await prisma.travelNote.create({
         data: {
             title,
-            travelPlan: { connect: { id: planId } }, 
+            travelPlan: { connect: { id: parseInt(planId) } }, 
         },
     });
 
@@ -102,7 +108,7 @@ travelNoteRouter.get("/:noteId", async (req, res) => {
 /**
  * RETRIEVE -- retrieve all notes for a plan
  */
-travelNoteRouter.get("/:planId", async (req, res) => {
+travelNoteRouter.get("/byId/:planId", async (req, res) => {
     const { planId } = req.params;
 
     // Verify user status
@@ -125,7 +131,7 @@ travelNoteRouter.get("/:planId", async (req, res) => {
     // Retrieve the notes
     const notes = await prisma.travelNote.findMany({
         where: {
-            travelPlanId: planId,
+            travelPlanId: parseInt(planId),
         },
     });
 

@@ -7,7 +7,7 @@ export default function Login() {
     const signUp = () => loginWithRedirect({ authorizationParams: { screen_hint: "signup" } });
 
     return (
-        <Container style={{ marginTop: '30vh' }} className="d-flex flex-column align-items-center justify-content-center">
+        <Container style={{ marginTop: '30vh', marginBottom: "60px"}} className="d-flex flex-column mt-3">
             <div className="d-grid gap-2">
                 <Row className="mx-auto">
                     <h5>Welcome to the Trip Engineer!</h5>

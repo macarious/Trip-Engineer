@@ -26,10 +26,10 @@ export default function VerifyUser() {
         if (accessToken) {
             verifyUser();
         }
-    }, [accessToken]);
+    }, [accessToken, navigate]);
 
     return (
-        <Container style={{ marginTop: '30vh' }} className="d-flex flex-column align-items-center justify-content-center">
+        <Container style={{ marginTop: '30vh', marginBottom: "60px"}} className="d-flex flex-column align-items-center justify-content-center">
             <div className="d-grid gap-2">
                 <Row className="mx-auto">
                     Loading...

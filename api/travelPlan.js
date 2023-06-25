@@ -118,10 +118,10 @@ travelPlanRouter.put("/:id", async (req, res) => {
     };
 
     const { id } = req.params;
-    const travelPlan = req.body;
+    const schedule = req.body;
 
     // Verify required fields
-    if (!travelPlan) {
+    if (!schedule) {
         res.status(400).send("Missing required fields");
         return;
     };
@@ -144,7 +144,7 @@ travelPlanRouter.put("/:id", async (req, res) => {
             id: parseInt(id),
         },
         data: {
-            plan: travelPlan
+            schedule
         },
     });
 

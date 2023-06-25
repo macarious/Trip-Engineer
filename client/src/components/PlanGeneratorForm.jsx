@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { Button, ButtonGroup, Card, Col, Form, ListGroup, Row, Spinner } from 'react-bootstrap';
+import { Link } from "react-router-dom";
+import { Button, ButtonGroup, Form, Row, Spinner } from 'react-bootstrap';
 import { useAuthToken } from "../AuthTokenContext";
+import TravelPlanCardGroup from "./TravelPlanCardGroup";
 import useTravelPlans from "../hooks/useTravelPlans";
 
-export default function TravelForm() {
+export default function PlanGeneratorForm() {
 
     const { accessToken } = useAuthToken();
+    
     const [travelPlans, setTravelPlans] = useTravelPlans();
-    const [generatedPlan, setGeneratedPlan] = useState("");
+    const [generatedPlanLocation, setGeneratedPlanLocation] = useState("");
+    const [generatedSchedule, setGeneratedSchedule] = useState("");
     const [durationDays, setDurationDays] = useState(1);
     const [hasCar, setHasCar] = useState(true);
     const [formData, setFormData] = useState(
@@ -31,6 +35,7 @@ export default function TravelForm() {
 
     // This function is called when plan generation is successful
     function successfulOutcome() {
+        setGeneratedPlanLocation(formData.location);
         setLoading(false);
     };
 
@@ -54,7 +59,7 @@ export default function TravelForm() {
         console.log("Form is valid. Now submitting:", formData);
 
         // Send a POST request to the API to generate a travel plan
-        const newPlan = await fetch(process.env.REACT_APP_API_URL + "/generator", {
+        const newSchedule = await fetch(process.env.REACT_APP_API_URL + "/generator", {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${accessToken}`,
@@ -68,7 +73,7 @@ export default function TravelForm() {
             return;
         });
 
-        if (!newPlan) {
+        if (!newSchedule) {
             unsuccessfulOutcome()
             return;
         };
@@ -101,7 +106,7 @@ export default function TravelForm() {
                 "Authorization": `Bearer ${accessToken}`,
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(newPlan),
+            body: JSON.stringify(newSchedule),
         })
         .then((response) => response.json())
         .catch((error) => {
@@ -116,7 +121,7 @@ export default function TravelForm() {
 
         // If the travel plans are updated properly, update the TravelPlans
         setTravelPlans(updatedTravelPlan);
-        setGeneratedPlan(newPlan);
+        setGeneratedSchedule(newSchedule);
         console.log("Existing saved travel plans:", travelPlans);
         console.log("New travel plan successfully added", updatedTravelPlan);
         successfulOutcome();
@@ -150,11 +155,11 @@ export default function TravelForm() {
 
     return (
         <>
-            <Row xs={1} className="d-flex">
+            <Row xs={1} className="d-flex mx-auto">
                 <Form
                     noValidate
                     validated={validated}
-                    className="d-flex flex-column mx-auto mb-5"
+                    className="d-flex flex-column mx-auto mb-1"
                     style={{ maxWidth: '400px' }}
                     onSubmit={handleFormSubmit}
                 >
@@ -180,7 +185,7 @@ export default function TravelForm() {
                     <Form.Group controlId="durationDays">
                         <Form.Label className="fw-bold mt-3">Duration (in days)</Form.Label>
                         <ButtonGroup className="d-flex">
-                            {[...Array(5)].map((_, index) => (
+                            {[...Array(4)].map((_, index) => (
                             <Button
                                 key={index + 1}
                                 variant={durationDays === (index + 1) ? "success" : "outline-secondary"}
@@ -246,14 +251,14 @@ export default function TravelForm() {
                         </ButtonGroup>
                     </Form.Group>
                     
-                    <div className="d-flex justify-content-center my-4">
+                    <div className="d-flex flex-column mt-4 mb-2 mx-auto">
                         <Button
                             type="submit"
                             aria-label="Generate"
                             aria-describedby="Generate a vacation plan"
                             variant="primary"
-                            className="w-50"
                             disabled={loading}
+                            style={{ width: '200px' }}
                         >
                             {loading ? (
                                 <>
@@ -264,46 +269,39 @@ export default function TravelForm() {
                                     role="status"
                                     aria-hidden="true"
                                 />
-                                    {" "}GENERATING...
+                                    {" "}Generating...
                                 </>
                                 ) : (
-                                    "GENERATE"
+                                    "Generate"
                                     )}
                         </Button>
+                        {loading && (<p className="text-center">This may take a moment.</p>)}
                     </div>
                 </Form>
             </Row>
 
-            {generatedPlan && (
-                <Row xs={1} className="d-flex mb-5">
-                    {generatedPlan.map((dayActivities, dayIndex) => (
-                        <Col>
-
-                            <Card className="m-1">
-                                <Card.Body className="p-0">
-                                    <Card.Header>Day {dayIndex + 1}</Card.Header>
-                                    <ListGroup variant="flush">
-                                        {dayActivities.map((activity) => (
-                                            <ListGroup.Item>
-                                                <strong>{activity.timeOfDay + " | " + activity.activityName}</strong>
-                                                <br />
-                                                {activity.description}
-                                                <br />
-                                                <a
-                                                    href={"https://maps.google.com/?q=" + encodeURIComponent(activity.address).replace(/%20/g, '+')}
-                                                    target="_blank"
-                                                    rel="noreferrer"
-                                                >
-                                                    <small>{activity.address}</small>
-                                                </a>
-                                            </ListGroup.Item>
-                                        ))}
-                                    </ListGroup>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row>
+            {generatedSchedule && (
+                <>
+                    <Row className="d-flex mx-auto">
+                        <hr className="my-3"/>
+                        <h2 className="text-center fw-bold">Your Trip to {generatedPlanLocation}</h2>
+                    </Row>
+                    <Row className="d-flex mx-auto">
+                        <TravelPlanCardGroup schedule={generatedSchedule} />
+                    </Row>
+                    <Row className="d-flex mx-auto">
+                        <Button
+                            aria-label="View All Saved Plans"
+                            aria-describedby="Directs user to Saved Plans page"
+                            className="mx-auto my-1"
+                            as={Link}
+                            to="/plan"
+                            style={{ width: "200px" }}
+                        >
+                            View All Saved Plans
+                        </Button>
+                    </Row>
+                </>
             )}
         </>
     );

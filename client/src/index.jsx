@@ -59,10 +59,10 @@ root.render(
                         <Route path="/" element={<RequireAuth><AppLayout /></RequireAuth>}>
                             <Route index element={<Home />} />
                             <Route path="*" element={<NotFound />} />
-                            <Route path="profile" element={<Profile />} />
                             <Route path="plan" element={<SavedPlans />} />
                             <Route path="plan/:planId" element={<TravelPlanDetail />} />
                             <Route path="generator" element={<PlanGenerator />} />
+                            <Route path="profile" element={<Profile />} />
                             <Route path="debugger" element={<AuthDebugger />} />
                         </Route>
                     </Routes>
