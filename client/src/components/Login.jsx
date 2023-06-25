@@ -16,10 +16,26 @@ export default function Login() {
                     <p>Please log in or create an account.</p>
                 </Row>
                 <Row>
-                    <Button variant="primary" className="w-100" onClick={loginWithRedirect}>Login</Button>
+                    <Button
+                        aria-label="Log in"
+                        aria-describedby="Log in to your account"
+                        style={{ width: "200px" }}
+                        className="mx-auto my-0"
+                        onClick={loginWithRedirect}
+                    >
+                        Login
+                    </Button>
                 </Row>
                 <Row>
-                    <Button variant="primary" className="w-100" onClick={signUp}>Create Account</Button>
+                    <Button
+                        aria-label="Log in"
+                        aria-describedby="Log in to your account"
+                        style={{ width: "200px" }}
+                        className="mx-auto my-0"
+                        onClick={signUp}
+                    >
+                        Create Account
+                    </Button>
                 </Row>
             </div>
         </ Container>

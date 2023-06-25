@@ -18,8 +18,9 @@ export default function Home() {
                 <Row>
                     <Button
                         aria-label="Create a New Plan"
-                        aria-describedby="Directs user to the Plan Generator page"
-                        active
+                        aria-describedby="Generates a new travel plan for the user"
+                        style={{ width: "200px" }}
+                        className="mx-auto my-0"
                         as={Link}
                         to="/generator"
                         >
@@ -30,7 +31,8 @@ export default function Home() {
                     <Button
                         aria-label="View Your Saved Plans"
                         aria-describedby="Directs user to the Saved Plans page"
-                        active
+                        style={{ width: "200px" }}
+                        className="mx-auto my-0"
                         as={Link}
                         to="/plan"
                     >
@@ -41,7 +43,8 @@ export default function Home() {
                     <Button
                         aria-label="Profile"
                         aria-describedby="Directs user to the Profile page"
-                        active
+                        style={{ width: "200px" }}
+                        className="mx-auto my-0"
                         as={Link}
                         to="/profile"
                     >
@@ -53,7 +56,8 @@ export default function Home() {
                         variant="outline"
                         aria-label="Log Out"
                         aria-describedby="Logs the user out of the application"
-                        active
+                        style={{ width: "200px" }}
+                        className="mx-auto my-0"
                         as={Link}
                         to="/login"
                         onClick={() => logout({ returnTo: window.location.origin })}

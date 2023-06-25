@@ -41,7 +41,6 @@ export default function SavedPlans() {
         const newAddNoteMode = {...editNoteMode};
         newAddNoteMode[planId] = !newAddNoteMode[planId];
         setEditNoteMode(newAddNoteMode);
-        console.log("addNoteMode: ", editNoteMode);
     };
 
     // This function deletes a travel note from the travel plan
@@ -152,25 +151,23 @@ export default function SavedPlans() {
                                         )}
                                         <div className="d-flex flex-wrap gap-0 mx-2">
                                         {(filterTravelNotesByPlan(travelPlan.id).map(travelNote => (
-                                            (Object.keys(travelNotes).length > 0) && (
-                                                <Badge
-                                                    bg="secondary"
-                                                    className="m-1 fs-7 px-3 pt-1 pb-1"
-                                                    key={travelNote.id}
-                                                >
-                                                    {`${travelNote.title + "  "}`}
-                                                    {(editNoteMode[travelPlan.id]) && (
-                                                    <CloseButton
-                                                        className="mx-0 bg-light p-0"
-                                                        aria-label="Remove tag from plan"
-                                                        aria-describedby={`Remove ${travelNote.title} tag from ${travelPlan.location}`}
-                                                        onClick={() => {
-                                                            deleteTravelNoteFromPlan(travelNote.id);
-                                                        }}
-                                                    />
-                                                    )}
-                                                </Badge>
-                                            )
+                                            <Badge
+                                                bg="secondary"
+                                                className="m-1 fs-7 px-3 pt-1 pb-1"
+                                                key={travelNote.id}
+                                            >
+                                                {`${travelNote.title + "  "}`}
+                                                {(editNoteMode[travelPlan.id]) && (
+                                                <CloseButton
+                                                    className="mx-0 bg-light p-0"
+                                                    aria-label="Remove tag from plan"
+                                                    aria-describedby={`Remove ${travelNote.title} tag from ${travelPlan.location}`}
+                                                    onClick={() => {
+                                                        deleteTravelNoteFromPlan(travelNote.id);
+                                                    }}
+                                                />
+                                                )}
+                                            </Badge>
                                         )))}
                                         </div>
                                         <hr className="my-1" />
