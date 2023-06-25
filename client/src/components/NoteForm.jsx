@@ -1,24 +1,16 @@
 import React, { useState } from 'react';
 import { Button, Form, Row } from 'react-bootstrap';
 import { useAuthToken } from "../AuthTokenContext";
-import useTravelNotes from "../hooks/useTravelNotes";
+import useTravelNotesByPlan from "../hooks/useTravelNotesByPlan";
 
 export default function TravelNoteForm(props) {
 
     const { accessToken } = useAuthToken();
     const { planId, callback } = props;
 
-    const [travelNotes, setTravelNotes] = useTravelNotes(planId);
+    const [travelNotesByPlan, setTravelNotesByPlan] = useTravelNotesByPlan(planId);
     const [formData, setFormData] = useState("");
     const [validated, setValidated] = useState(false);
-
-    // This function is called when note form is submitted successfully
-    function successfulOutcome() {
-        setTravelNotes([...travelNotes, formData.title]);
-        setFormData("");
-        setValidated(false);
-        callback(planId);
-    };
 
     function handleCancelButtonClick() {
         setFormData("");
@@ -58,8 +50,11 @@ export default function TravelNoteForm(props) {
             return;
         };
 
+        setTravelNotesByPlan([...travelNotesByPlan, formData.title]);
+        setFormData("");
+        setValidated(false);
         form.reset();
-        successfulOutcome();
+        callback(planId, newNote);
     };
 
     function handleFieldChange (e) {
@@ -74,49 +69,53 @@ export default function TravelNoteForm(props) {
         <>
             <Row xs={1} className="d-flex mx-auto">
                 <Form
-                    noValidated
+                    noValidate
                     validated={validated}
                     className="d-flex flex-column mx-auto mb-1"
                     onSubmit={handleFormSubmit}
                 >
                     <Form.Group className="mb-2" controlId="title">
                         <Form.Label
-                            aria-label="Note"
-                            className="fw-bold mt-3"
+                            aria-label="Add Tag"
+                            aria-describedby="Enter a tag to attach to a travel plan"
+                            className="fw-bold mt-3 mb-0 mx-2"
                         >
-                            Add Note:
+                            Add Tag:
                         </Form.Label>
                         <Form.Control
                             name="title"
                             type="text"
-                            as="textarea"
-                            rows={2}
-                            placeholder="ex. Summer Holiday 2024"
+                            rows={1}
+                            placeholder="ex. Summer-2024"
                             aria-label="Note"
-                            aria-describedby="Enter a note; ex. Summer Holiday 2024"
-                            pattern=".{1,63}"
+                            aria-describedby="Enter a note; ex. Summer-2024"
+                            pattern=".{1,15}"
                             onChange={handleFieldChange}
                             required
                         />
-                        <Form.Control.Feedback type="invalid">(1 to 63 characters)</Form.Control.Feedback>
+                        <Form.Control.Feedback type="invalid">(1 to 15 characters)</Form.Control.Feedback>
                     </Form.Group>
                     
-                    <div className="d-flex flex-row flex-wrap mb-1 mx-auto" xs={1}>
+                    <div className="d-flex flex-wrap justify-content-center">
                         <Button
+                            variant="primary"
                             type="submit"
                             aria-label="Submit"
                             aria-describedby="Submit a note to attach to a travel plan"
-                            style={{ width: '200px' }}
+                            className="mx-2 my-1 p-0"
+                            style={{ width: '150px' }}
                         >
-                            Submit
+                            Add
                         </Button>
                         <Button
+                            variant="outline-secondary"
                             aria-label="Cancel"
                             aria-describedby="Exit from the note form"
-                            style={{ width: '200px' }}
+                            className="mx-2 my-1 p-0"
+                            style={{ width: '150px' }}
                             onClick={handleCancelButtonClick}
                         >
-                            Cancel
+                            Return
                         </Button>
                     </div>
                 </Form>

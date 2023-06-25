@@ -35,7 +35,7 @@ function AppLayout() {
                 <Outlet />
             </div>
             {/* Footer containing site information */}
-            <Navbar expand="lg" bg="dark" variant="dark" sticky="bottom" style={{left: 0, bottom: 0, width: "100%", position: "fixed"}}>
+            <Navbar expand="lg" bg="dark" variant="dark" style={{left: 0, bottom: 0, width: "100%"}}>
             <Container>
                     <Nav className="me-auto">
                         <Nav.Link as={Link} to="/">&copy; 2021 Trip Engineer</Nav.Link>

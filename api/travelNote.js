@@ -47,16 +47,10 @@ travelNoteRouter.post("/:planId", async (req, res) => {
     const { planId } = req.params;
     const { title } = req.body;
 
-    console.log("1 planId:", planId);
-    console.log("1 title", title);
     // Verify user status
     if (!userStatusVerified(req, res)) {
         return;
     };
-    
-    console.log("2 planId:", planId);
-    console.log("2 title", title);
-
 
     // Verify required fields
     if (!title) {
@@ -74,6 +68,38 @@ travelNoteRouter.post("/:planId", async (req, res) => {
 
     // Return the note
     res.status(201).json(note);
+});
+
+
+/**
+ * RETRIEVE -- retrieve all notes
+ */
+travelNoteRouter.get("/", async (req, res) => {
+    const { noteId } = req.params;
+
+    // Verify user status
+    if (!userStatusVerified(req, res)) {
+        return;
+    };
+
+    // Retrieve all plans for the user
+    const plans = await prisma.travelPlan.findMany({
+        where: {
+            user: { auth0Id: req.auth.payload.sub },
+        },
+    });
+
+    // Retrieve all notes for all plans
+    const notes = await prisma.travelNote.findMany({
+        where: {
+            travelPlanId: {
+                in: plans.map((plan) => plan.id),
+            },
+        },
+    });
+    
+    // Return the notes
+    res.json(notes);
 });
 
 
@@ -102,6 +128,41 @@ travelNoteRouter.get("/:noteId", async (req, res) => {
 
     // Return the note
     res.json(note);
+});
+
+
+/**
+ * RETRIEVE -- retrieve all notes for a plan
+ */
+travelNoteRouter.get("/byId/:planId", async (req, res) => {
+    const { planId } = req.params;
+
+    // Verify user status
+    if (!userStatusVerified(req, res)) {
+        return;
+    };
+
+    // Retrieve the plan which the note belongs to
+    const plan = await prisma.travelPlan.findUnique({
+        where: {
+            id: parseInt(planId),
+        },
+    });
+
+    // Verify ownership of plan
+    if (!isPlanBelongsToUser(req, res, plan)) {
+        return;
+    };
+
+    // Retrieve the notes
+    const notes = await prisma.travelNote.findMany({
+        where: {
+            travelPlanId: parseInt(planId),
+        },
+    });
+
+    // Return the notes
+    res.json(notes);
 });
 
 

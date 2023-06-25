@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Navigate } from "react-router-dom";
-import { Button, Container, Nav, Row } from "react-bootstrap";
+import { Button, Container, Row } from "react-bootstrap";
 import { useAuthToken } from "../AuthTokenContext";
 import { Link } from "react-router-dom";
 import TravelPlanCardGroup from "./TravelPlanCardGroup";
@@ -8,7 +8,6 @@ import useTravelPlans from "../hooks/useTravelPlans";
 
 // Add feature to delete plan
 // Add feature to add notes
-// Add feature to link to generate more plans or see other saved plans
 
 // This is the component that will display the travel plan details
 export default function TravelPlanDetail() {
