@@ -43,7 +43,7 @@ generatorRouter.post("/", async (req, res) => {
 
     // Construct the body to be sent to the API
     const body = JSON.stringify({
-        "model": process.env.OPENAI_MODEL,
+        "model": "gpt-3.5-turbo-0613",
         "messages": [
             {
             "role": "user",

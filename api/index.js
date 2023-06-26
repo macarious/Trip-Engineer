@@ -3,15 +3,17 @@ import express from "express";
 import pkg from "@prisma/client";
 import morgan from "morgan";
 import cors from "cors";
-import requireAuth from "./util/requireAuth.js";
-import travelPlanRouter from "./travelplan.js";
-import travelNoteRouter from "./travelNote.js";
-import generatorRouter from "./generator.js";
+import requireAuth from './util/requireAuth.js';
+import travelPlanRouter from './travelPlan.js';
+import travelNoteRouter from './travelNote.js'; 
+import generatorRouter from './generator.js';
 
 dotenv.config();
 const app = express();
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
+const PORT = parseInt(process.env.PORT) || 8080;
+
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -81,7 +83,7 @@ app.post("/verify-user", requireAuth, async (req, res) => {
     }
     });
 
-app.listen(8000, () => {
-    console.log("Server running on http://localhost:8000 🎉 🚀");
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT} 🎉 🚀`);
 });
 

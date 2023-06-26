@@ -8,32 +8,33 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model travelNote {
-  id              Int           @id @default(autoincrement())
-  title           String        @db.VarChar(255)
-  travelPlan      travelPlan    @relation(fields: [travelPlanId], references: [id])
-  travelPlanId    Int
+  id           Int        @id @default(autoincrement())
+  title        String     @db.VarChar(255)
+  travelPlan   travelPlan @relation(fields: [travelPlanId], references: [id])
+  travelPlanId Int
 }
 
 model travelPlan {
-  id              Int           @id @default(autoincrement())
-  location        String        @db.VarChar(31)
-  durationDays    Int           
-  arrivalTime     String        @db.VarChar(31)
-  departureTime   String        @db.VarChar(31)
-  hasCar          Boolean       @default(false)
-  schedule        Json?
-  travelNotes     travelNote[]
-  user            user          @relation(fields: [userId], references: [id])
-  userId          Int
+  id            Int          @id @default(autoincrement())
+  location      String       @db.VarChar(31)
+  durationDays  Int
+  arrivalTime   String       @db.VarChar(31)
+  departureTime String       @db.VarChar(31)
+  hasCar        Boolean      @default(false)
+  schedule      Json?
+  travelNotes   travelNote[]
+  user          user         @relation(fields: [userId], references: [id])
+  userId        Int
 }
 
 model user {
-  id              Int           @id @default(autoincrement())
-  email           String        @unique
-  auth0Id         String        @unique @default("")
-  name            String?
-  travelPlans     travelPlan[]
+  id          Int          @id @default(autoincrement())
+  email       String       @unique
+  auth0Id     String       @unique @default("")
+  name        String?
+  travelPlans travelPlan[]
 }
