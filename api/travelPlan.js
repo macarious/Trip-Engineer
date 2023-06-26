@@ -2,7 +2,7 @@ import express from "express";
 import pkg from "@prisma/client";
 import * as dotenv from 'dotenv';
 import isPlanBelongsToUser from "./util/isPlanBelongsToUser.js";
-import userStatusVerified from "./util/verifyUserStatus.js";
+import userStatusVerified from "./util/userStatusVerified.js";
 
 dotenv.config();
 const travelPlanRouter = express.Router();

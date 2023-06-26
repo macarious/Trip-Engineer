@@ -97,142 +97,136 @@ export default function SavedPlans() {
     };
 
     return (
-        <Container style={{ maxWidth: '1024px', "marginBottom": "60px" }} className="d-flex flex-column mt-3">
+        <Container style={{ marginTop: '5vh' }} className="d-flex flex-column align-items-stretch mb-4">
             <div>
                 <Row>
                     <h1 className="text-center">Your Saved Plans</h1>
                 </Row>
-                {(travelPlans.length > 0)? (
-                    <Row xs={1} md={2} lg={3} className="d-flex mt-2 mb-5 mx-auto">
-                        {travelPlans.map((travelPlan, travelPlanIndex) => (
-                            <Col key={"Plan" + travelPlanIndex}>
-                                <Card className="mx-auto my-2 pb-2">
-                                    <Card.Body className="p-0">
-                                        <Card.Header><strong>Plan {travelPlanIndex + 1}: {travelPlan.location}</strong></Card.Header>
-                                        <Row>
-                                            <Col className="d-flex justify-content-end mx-1 px-0">
-                                                Duration |
-                                            </Col>
-                                            <Col className="mx-1 px-0 fw-bold">
-                                                {travelPlan.durationDays} days
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col className="d-flex justify-content-end mx-1 px-0">
-                                                Arrival Time |
-                                            </Col>
-                                            <Col className="mx-1 px-0 fw-bold">
-                                                {travelPlan.arrivalTime}
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col className="d-flex justify-content-end mx-1 px-0">
-                                                Departure Time |
-                                            </Col>
-                                            <Col className="mx-1 px-0 fw-bold">
-                                                {travelPlan.departureTime}
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col className="d-flex justify-content-end mx-1 px-0">
-                                                Car |
-                                            </Col>
-                                            <Col className="mx-1 px-0 fw-bold">
-                                                {travelPlan.hasCar ? "Yes" : "No"}
-                                            </Col>
-                                        </Row>
+                <Row xs={1} md={2} lg={3} className="d-flex mt-2 mx-auto">
+                {travelPlans.map((travelPlan, travelPlanIndex) => (
+                    <Col key={"Plan" + travelPlanIndex}>
+                        <Card className="mx-auto my-2 pb-2">
+                            <Card.Body className="p-0">
+                                <Card.Header><strong>Plan {travelPlanIndex + 1}: {travelPlan.location}</strong></Card.Header>
+                                <Row>
+                                    <Col className="d-flex justify-content-end mx-1 mt-2 px-0">
+                                        Duration |
+                                    </Col>
+                                    <Col className="mx-1 px-0 fw-bold mt-2">
+                                        {travelPlan.durationDays} days
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col className="d-flex justify-content-end mx-1 px-0">
+                                        Arrival Time |
+                                    </Col>
+                                    <Col className="mx-1 px-0 fw-bold">
+                                        {travelPlan.arrivalTime}
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col className="d-flex justify-content-end mx-1 px-0">
+                                        Departure Time |
+                                    </Col>
+                                    <Col className="mx-1 px-0 fw-bold">
+                                        {travelPlan.departureTime}
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col className="d-flex justify-content-end mx-1 px-0">
+                                        Car |
+                                    </Col>
+                                    <Col className="mx-1 px-0 fw-bold">
+                                        {travelPlan.hasCar ? "Yes" : "No"}
+                                    </Col>
+                                </Row>
+                                <div className="d-flex flex-wrap gap-0 mx-2">
+                                {(filterTravelNotesByPlan(travelPlan.id).map(travelNote => (
+                                    <Badge
+                                        bg="secondary"
+                                        className="m-1 fs-7 px-3 pt-1 pb-1"
+                                        key={travelNote.id}
+                                    >
+                                        {`${travelNote.title + "  "}`}
                                         {(editNoteMode[travelPlan.id]) && (
-                                            <div className="fw-bold mt-3 mb-0 mx-3"
-                                                aria-label="Delete tag"
-                                                aria-describedby={`Delete tag from ${travelPlan.location}`}
-                                            >
-                                            Delete Tag:
-                                            </div>
+                                        <CloseButton
+                                            className="mx-0 bg-light p-0"
+                                            aria-label="Remove tag from plan"
+                                            aria-describedby={`Remove ${travelNote.title} tag from ${travelPlan.location}`}
+                                            onClick={() => {
+                                                deleteTravelNoteFromPlan(travelNote.id);
+                                            }}
+                                        />
                                         )}
-                                        <div className="d-flex flex-wrap gap-0 mx-2">
-                                        {(filterTravelNotesByPlan(travelPlan.id).map(travelNote => (
-                                            <Badge
-                                                bg="secondary"
-                                                className="m-1 fs-7 px-3 pt-1 pb-1"
-                                                key={travelNote.id}
-                                            >
-                                                {`${travelNote.title + "  "}`}
-                                                {(editNoteMode[travelPlan.id]) && (
-                                                <CloseButton
-                                                    className="mx-0 bg-light p-0"
-                                                    aria-label="Remove tag from plan"
-                                                    aria-describedby={`Remove ${travelNote.title} tag from ${travelPlan.location}`}
-                                                    onClick={() => {
-                                                        deleteTravelNoteFromPlan(travelNote.id);
-                                                    }}
-                                                />
-                                                )}
-                                            </Badge>
-                                        )))}
-                                        </div>
-                                        <hr className="my-1" />
-                                        {(!editNoteMode[travelPlan.id])? (
-                                            <div className="d-flex flex-wrap justify-content-center">
-                                                <Button
-                                                    aria-label={`View Plan ${travelPlan.location}`}
-                                                    aria-describedby={`View the plan for ${travelPlan.location}`}
-                                                    as={Link}
-                                                    to={`/plan/${travelPlan.id}`}
-                                                    style={{ width: "150px" }}
-                                                    className="mx-2 my-1 p-0"
-                                                >
-                                                    View Plan
-                                                </Button>
-                                                <Button
-                                                    aria-label={`Edit tag for ${travelPlan.location}`}
-                                                    aria-describedby={`Add or delete a tag for ${travelPlan.location}`}
-                                                    as={Link}
-                                                    style={{ width: "150px" }}
-                                                    className="mx-2 my-1 p-0"
-                                                    onClick={() => {openEditNoteMode(travelPlan.id)}}
-                                                >
-                                                    Edit Tag
-                                                </Button>
-                                                <Button
-                                                    variant="outline-danger"
-                                                    aria-label={`Delete Plan ${travelPlan.location}`}
-                                                    aria-describedby={`Delete the plan for ${travelPlan.location}`}
-                                                    style={{ width: "150px" }}
-                                                    className="mx-2 my-1 p-0"
-                                                    onClick={() => deletePlan(travelPlan.id)}
-                                                >
-                                                    Delete Plan
-                                                </Button>
-                                            </div>
-                                        ) : (
-                                            <Row>
-                                                <TravelNoteForm
-                                                    planId={travelPlan.id}
-                                                    callback={callbackFromNoteForm}
-                                                />
-                                            </Row>
-                                        )}
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        ))}
-                    </Row>
-                ) : (
-                    <Row>
-                        <p className="text-center">There are currently no plans.</p>
-                        <Button
-                            variant="primary"
-                            active
-                            as={Link}
-                            to="/generator"
-                            style={{ width: "200px" }}
-                            className="mx-auto"
-                            >
-                                Create a New Plan
-                        </Button>
-                    </Row>
-                )}
+                                    </Badge>
+                                )))}
+                                </div>
+                                <hr className="my-2" />
+                                {(!editNoteMode[travelPlan.id])? (
+                                    <div className="d-flex flex-wrap justify-content-center gap-2 mb-1">
+                                        <Button
+                                            aria-label={`View Plan ${travelPlan.location}`}
+                                            aria-describedby={`View the plan for ${travelPlan.location}`}
+                                            as={Link}
+                                            to={`/plan/${travelPlan.id}`}
+                                            style={{ width: "150px" }}
+                                            className="mx-1"
+                                        >
+                                            View Plan
+                                        </Button>
+                                        <Button
+                                            aria-label={`Edit tag for ${travelPlan.location}`}
+                                            aria-describedby={`Add or delete a tag for ${travelPlan.location}`}
+                                            as={Link}
+                                            style={{ width: "150px" }}
+                                            className="mx-1"
+                                            onClick={() => {openEditNoteMode(travelPlan.id)}}
+                                        >
+                                            Add / Edit Tag
+                                        </Button>
+                                        <Button
+                                            variant="outline-danger"
+                                            aria-label={`Delete Plan ${travelPlan.location}`}
+                                            aria-describedby={`Delete the plan for ${travelPlan.location}`}
+                                            style={{ width: "150px" }}
+                                            className="mx-1"
+                                            onClick={() => deletePlan(travelPlan.id)}
+                                        >
+                                            Delete Plan
+                                        </Button>
+                                    </div>
+                                ) : (
+                                    <Row>
+                                        <TravelNoteForm
+                                            planId={travelPlan.id}
+                                            callback={callbackFromNoteForm}
+                                        />
+                                    </Row>
+                                )}
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                ))}
+                    <Col key="Create New" className="align-self-stretch">
+                        <Card className="mx-auto my-2 pb-2">
+                            <Card.Body className="p-0">
+                                <Card.Header><strong>Plan</strong></Card.Header>
+                                <div className="d-flex justify-content-center mt-3 mb-2">
+                                    <Button
+                                        aria-label="Create a New Plan"
+                                        aria-describedby="Generates a new travel plan for the user"
+                                        style={{ width: "150px" }}
+                                        as={Link}
+                                        to="/generator"
+                                        >
+                                            Create New Plan
+                                    </Button>
+                                </div>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
             </div>
-        </ Container>
+        </Container>
     );
 }

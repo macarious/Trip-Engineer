@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Form, Row } from 'react-bootstrap';
 import { useAuthToken } from "../AuthTokenContext";
 import useTravelNotesByPlan from "../hooks/useTravelNotesByPlan";
@@ -7,7 +7,6 @@ export default function TravelNoteForm(props) {
 
     const { accessToken } = useAuthToken();
     const { planId, callback } = props;
-
     const [travelNotesByPlan, setTravelNotesByPlan] = useTravelNotesByPlan(planId);
     const [formData, setFormData] = useState("");
     const [validated, setValidated] = useState(false);
@@ -78,31 +77,29 @@ export default function TravelNoteForm(props) {
                         <Form.Label
                             aria-label="Add Tag"
                             aria-describedby="Enter a tag to attach to a travel plan"
-                            className="fw-bold mt-3 mb-0 mx-2"
+                            className="fw-bold mb-0 mx-2"
                         >
                             Add Tag:
                         </Form.Label>
                         <Form.Control
                             name="title"
                             type="text"
-                            rows={1}
                             placeholder="ex. Summer-2024"
                             aria-label="Note"
                             aria-describedby="Enter a note; ex. Summer-2024"
-                            pattern=".{1,15}"
+                            pattern=".{1,31}"
                             onChange={handleFieldChange}
                             required
                         />
                         <Form.Control.Feedback type="invalid">(1 to 15 characters)</Form.Control.Feedback>
                     </Form.Group>
                     
-                    <div className="d-flex flex-wrap justify-content-center">
+                    <div className="d-flex flex-wrap justify-content-center gap-2">
                         <Button
                             variant="primary"
                             type="submit"
                             aria-label="Submit"
                             aria-describedby="Submit a note to attach to a travel plan"
-                            className="mx-2 my-1 p-0"
                             style={{ width: '150px' }}
                         >
                             Add
@@ -111,7 +108,6 @@ export default function TravelNoteForm(props) {
                             variant="outline-secondary"
                             aria-label="Cancel"
                             aria-describedby="Exit from the note form"
-                            className="mx-2 my-1 p-0"
                             style={{ width: '150px' }}
                             onClick={handleCancelButtonClick}
                         >

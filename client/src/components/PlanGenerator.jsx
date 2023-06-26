@@ -1,10 +1,9 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row } from "react-bootstrap";
 import PlanGeneratorForm from "./PlanGeneratorForm";
 
 export default function PlanGenerator() {
     return (
-        <Container style={{ maxWidth: '1024px', marginBottom: "60px"}} className="d-flex flex-column mt-3">
+        <Container style={{ marginTop: '5vh'}} className="mb-4">
             <Row>
                 <h1 className="text-center">Create a New Plan</h1>
             </Row>

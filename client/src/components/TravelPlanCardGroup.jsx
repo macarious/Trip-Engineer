@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 
 // This component is used to display the schedule in a card group format
@@ -11,7 +10,7 @@ export default function TravelPlanCardGroup(props) {
                 <Row xs={1} className="d-flex mb-1">
                     {schedule.map((dayActivities, dayIndex) => (
                         <Col key={"Day" + dayIndex}>
-                            <Card className="m-1">
+                            <Card className="m-2">
                                 <Card.Body className="p-0">
                                     <Card.Header>Day {dayIndex + 1}</Card.Header>
                                     <ListGroup variant="flush">

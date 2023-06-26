@@ -1,4 +1,3 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import { Container, Row, Button, } from "react-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -7,13 +6,14 @@ export default function Home() {
     const { user, logout } = useAuth0();
 
     return (
-        <Container style={{ marginTop: '10vh', marginBottom: "60px"}} className="d-flex flex-column align-items-center mt-3">
-            <div className="d-grid gap-2">
-                <Row className="mx-auto">
-                    <h5>{user?.name}</h5>
-                </Row>
-                <Row className="mx-auto">
-                    <p>Are you ready for your next adventure?</p>
+        <Container style={{ marginTop: '10vh'}} className="d-flex flex-column align-items-center mb-4">
+            <div className="d-grid gap-3">
+                <Row className="text-center">
+                    <p>
+                        <strong>{user?.name}</strong>
+                        <br />
+                        Are you ready for your next adventure?
+                    </p>
                 </Row>
                 <Row>
                     <Button
@@ -53,10 +53,10 @@ export default function Home() {
                 </Row>
                 <Row>
                     <Button
-                        variant="outline"
+                        variant="outline-primary"
                         aria-label="Log Out"
                         aria-describedby="Logs the user out of the application"
-                        style={{ width: "200px" }}
+                        style={{ width: "200px", backgroundColor: "white"}}
                         className="mx-auto my-0"
                         as={Link}
                         to="/login"

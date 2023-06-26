@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from "react-router-dom";
-import { Button, ButtonGroup, Form, Row, Spinner } from 'react-bootstrap';
+import { Button, ButtonGroup, Container, Form, Row, Spinner } from 'react-bootstrap';
 import { useAuthToken } from "../AuthTokenContext";
+import backToTop from "../util/backToTop";
 import TravelPlanCardGroup from "./TravelPlanCardGroup";
 import useTravelPlans from "../hooks/useTravelPlans";
 
@@ -178,21 +179,22 @@ export default function PlanGeneratorForm() {
                             pattern=".{5,50}"
                             onChange={handleFieldChange}
                             required
+                            className="border border-2 border-dark rounded-3"
                         />
                         <Form.Control.Feedback type="invalid">Please input a destination (5 to 50 characters)</Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group controlId="durationDays">
                         <Form.Label className="fw-bold mt-3">Duration (in days)</Form.Label>
-                        <ButtonGroup className="d-flex">
+                        <ButtonGroup className="d-flex border border-2 border-dark rounded-3" style={{backgroundColor: "white"}}>
                             {[...Array(4)].map((_, index) => (
                             <Button
                                 key={index + 1}
-                                variant={durationDays === (index + 1) ? "success" : "outline-secondary"}
+                                variant={durationDays === (index + 1) ? "success" : "outline-success"}
                                 aria-label={`Duration ${index + 1} Day(s)`}
                                 aria-describedby={`Duration ${index + 1} Day(s)`}
                                 onClick={() => handleDurationButtonClick(index + 1)}
-                                className="d-flex d-flex justify-content-center fw-bold"
+                                className="d-flex d-flex justify-content-center fw-bold p-1"
                             >
                                 {index + 1}
                             </Button>
@@ -210,6 +212,7 @@ export default function PlanGeneratorForm() {
                             aria-describedby="Enter arrival time of first day"
                             onChange={handleFieldChange}
                             required
+                            className="border border-2 border-dark rounded-3"
                         />
                         <Form.Control.Feedback type="invalid">Please select an arrival time</Form.Control.Feedback>
                     </Form.Group>
@@ -224,34 +227,36 @@ export default function PlanGeneratorForm() {
                             aria-describedby="Enter departure time of final day"
                             onChange={handleFieldChange}
                             required
+                            className="border border-2 border-dark rounded-3"
                         />
                         <Form.Control.Feedback type="invalid">Please select a departure time</Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group controlId="hasCar">
-                        <ButtonGroup className="d-flex justify-content-center mt-4">
+                        <Form.Label className="fw-bold mt-3">Transportation Mode</Form.Label>
+                        <ButtonGroup className="d-flex justify-content-center border border-2 border-dark rounded-3" style={{backgroundColor: "white"}}>
                             <Button
-                                variant={hasCar === true ? "success" : "outline-secondary"}
+                                variant={hasCar === true ? "success" : "outline-success"}
                                 aria-label="Has car"
                                 aria-describedby="Select if you have a car"
                                 onClick={() => handleCarButtonClick(true)}
-                                className="w-50 fw-bold"
+                                className="w-50 fw-bold p-1"
                             >
                                 Car
                             </Button>
                             <Button
-                                variant={hasCar === false ? "success" : "outline-secondary"}
-                                aria-label="No car"
-                                aria-describedby="Select if you do not have a car"
+                                variant={hasCar === false ? "success" : "outline-success"}
+                                aria-label="Trnasit"
+                                aria-describedby="Select if you are travelling by transit"
                                 onClick={() => handleCarButtonClick(false)}
-                                className="w-50 fw-bold"
+                                className="w-50 fw-bold p-1"
                             >
-                                No Car
+                                Transit
                             </Button>
                         </ButtonGroup>
                     </Form.Group>
                     
-                    <div className="d-flex flex-column mt-4 mb-2 mx-auto">
+                    <div className="d-flex flex-column mt-5 mb-2 mx-auto">
                         <Button
                             type="submit"
                             aria-label="Generate"
@@ -269,37 +274,45 @@ export default function PlanGeneratorForm() {
                                     role="status"
                                     aria-hidden="true"
                                 />
-                                    {" "}Generating...
+                                    {" "}Please wait...
                                 </>
                                 ) : (
                                     "Generate"
                                     )}
                         </Button>
-                        {loading && (<p className="text-center">This may take a moment.</p>)}
                     </div>
                 </Form>
             </Row>
 
             {generatedSchedule && (
                 <>
-                    <Row className="d-flex mx-auto">
+                    <Row className="d-flex flex-column">
                         <hr className="my-3"/>
-                        <h2 className="text-center fw-bold">Your Trip to {generatedPlanLocation}</h2>
+                        <h3 className="text-center">Your Trip to {generatedPlanLocation}</h3>
                     </Row>
                     <Row className="d-flex mx-auto">
                         <TravelPlanCardGroup schedule={generatedSchedule} />
                     </Row>
-                    <Row className="d-flex mx-auto">
-                        <Button
-                            aria-label="View All Saved Plans"
-                            aria-describedby="Directs user to Saved Plans page"
-                            className="mx-auto my-1"
-                            as={Link}
-                            to="/plan"
-                            style={{ width: "200px" }}
-                        >
-                            View All Saved Plans
-                        </Button>
+                    <Row>
+                        <Container className="d-flex flex-wrap justify-content-center gap-3">
+                            <Button
+                                aria-label="Back to Top"
+                                aria-describedby="Directs user back to the top of the page"
+                                style={{ width: "200px" }}
+                                onClick={backToTop}
+                            >
+                                Back to Top
+                            </Button>
+                            <Button
+                                aria-label="Back to Saved Plans"
+                                aria-describedby="Directs user back to the Saved Plans page"
+                                as={Link}
+                                to={"/plan"}
+                                style={{ width: "200px" }}
+                            >
+                                Back to Saved Plans
+                            </Button>
+                        </Container>
                     </Row>
                 </>
             )}
