@@ -7,7 +7,7 @@ export default function Profile() {
   const { user, logout } = useAuth0();
 
     return (
-        <Container className=" profile-content d-flex flex-column align-items-center justify-content-center mb-4">
+        <Container className=" profile-content d-flex flex-column align-items-center justify-content-start mb-4">
             <div className="d-grid gap-2">
                 <Row>
                     <Card
@@ -17,8 +17,7 @@ export default function Profile() {
                         <Card.Img
                             src={user?.picture}
                             alt="Profile Image"
-                            style={{ width: '200px', height: 'auto' }}
-                            className="mx-auto my-2"
+                            className="w-50 m-2 text align-self-center"
                         />
                         <ListGroup className="list-group-flush">
                             <ListGroup.Item><div className="mx-2">Full Name: <strong>{user?.name}</strong></div></ListGroup.Item>
