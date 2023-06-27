@@ -216,7 +216,7 @@ export default function SavedPlans() {
                     <Col key="Create New" className="align-self-stretch">
                         <Card className="mx-auto my-2 pb-2">
                             <Card.Body className="p-0">
-                                <Card.Header><strong>Plan</strong></Card.Header>
+                                <Card.Header><strong>Plan:</strong></Card.Header>
                                 <div className="d-flex justify-content-center mt-3 mb-2">
                                     <Button
                                         aria-label="Create a New Plan"
@@ -225,7 +225,7 @@ export default function SavedPlans() {
                                         to="/generator"
                                         className="button-main-medium"
                                         >
-                                            Create New Plan
+                                            Create
                                     </Button>
                                 </div>
                             </Card.Body>
