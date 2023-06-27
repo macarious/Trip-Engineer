@@ -5,6 +5,7 @@ import { useAuthToken } from "../AuthTokenContext";
 import backToTop from "../util/backToTop";
 import TravelPlanCardGroup from "./TravelPlanCardGroup";
 import useTravelPlans from "../hooks/useTravelPlans";
+import "../styles/planGeneratorForm.css";
 
 export default function PlanGeneratorForm() {
 
@@ -160,8 +161,7 @@ export default function PlanGeneratorForm() {
                 <Form
                     noValidate
                     validated={validated}
-                    className="d-flex flex-column mx-auto mb-1"
-                    style={{ maxWidth: '400px' }}
+                    className="generator-form d-flex flex-column mx-auto mb-1"
                     onSubmit={handleFormSubmit}
                 >
                     <Form.Group controlId="location">
@@ -179,14 +179,14 @@ export default function PlanGeneratorForm() {
                             pattern=".{5,50}"
                             onChange={handleFieldChange}
                             required
-                            className="border border-2 border-dark rounded-3"
+                            className="border border-3 rounded-3"
                         />
                         <Form.Control.Feedback type="invalid">Please input a destination (5 to 50 characters)</Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group controlId="durationDays">
                         <Form.Label className="fw-bold mt-3">Duration (in days)</Form.Label>
-                        <ButtonGroup className="d-flex border border-2 border-dark rounded-3" style={{backgroundColor: "white"}}>
+                        <ButtonGroup className="duration-button-group d-flex border border-3 rounded-3">
                             {[...Array(4)].map((_, index) => (
                             <Button
                                 key={index + 1}
@@ -212,7 +212,7 @@ export default function PlanGeneratorForm() {
                             aria-describedby="Enter arrival time of first day"
                             onChange={handleFieldChange}
                             required
-                            className="border border-2 border-dark rounded-3"
+                            className="border border-3 rounded-3"
                         />
                         <Form.Control.Feedback type="invalid">Please select an arrival time</Form.Control.Feedback>
                     </Form.Group>
@@ -227,14 +227,14 @@ export default function PlanGeneratorForm() {
                             aria-describedby="Enter departure time of final day"
                             onChange={handleFieldChange}
                             required
-                            className="border border-2 border-dark rounded-3"
+                            className="border border-3 rounded-3"
                         />
                         <Form.Control.Feedback type="invalid">Please select a departure time</Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group controlId="hasCar">
                         <Form.Label className="fw-bold mt-3">Transportation Mode</Form.Label>
-                        <ButtonGroup className="d-flex justify-content-center border border-2 border-dark rounded-3" style={{backgroundColor: "white"}}>
+                        <ButtonGroup className="car-button-group d-flex justify-content-center border border-3 rounded-3">
                             <Button
                                 variant={hasCar === true ? "success" : "outline-success"}
                                 aria-label="Has car"
@@ -262,8 +262,8 @@ export default function PlanGeneratorForm() {
                             aria-label="Generate"
                             aria-describedby="Generate a vacation plan"
                             variant="primary"
+                            className="generate-button"
                             disabled={loading}
-                            style={{ width: '200px' }}
                         >
                             {loading ? (
                                 <>

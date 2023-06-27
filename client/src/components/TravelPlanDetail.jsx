@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import backToTop from "../util/backToTop";
 import TravelPlanCardGroup from "./TravelPlanCardGroup";
 import useTravelPlans from "../hooks/useTravelPlans";
+import "../styles/travelPlanDetail.css";
 
 // Add feature to delete plan
 // Add feature to add notes
@@ -54,7 +55,7 @@ export default function TravelPlanDetail() {
     }   
     
     return (
-        <Container style={{ marginTop: "5vh"}} className="d-flex flex-column mb-4">
+        <Container className="content-travel-plan-detail d-flex flex-column mb-4">
             {currentPlan? (
                 <>
                     <Row>
@@ -68,7 +69,7 @@ export default function TravelPlanDetail() {
                             <Button
                                 aria-label="Back to Top"
                                 aria-describedby="Directs user back to the top of the page"
-                                style={{ width: "200px" }}
+                                className="button-main"
                                 onClick={backToTop}
                             >
                                 Back to Top
@@ -78,7 +79,7 @@ export default function TravelPlanDetail() {
                                 aria-describedby="Directs user back to the Saved Plans page"
                                 as={Link}
                                 to={"/plan"}
-                                style={{ width: "200px" }}
+                                className="button-main"
                             >
                                 Back to Saved Plans
                             </Button>
@@ -86,7 +87,7 @@ export default function TravelPlanDetail() {
                                 variant="outline-danger"
                                 aria-label={`Delete plan: ${currentPlan.location}`}
                                 aria-describedby={`Deletes the plan for ${currentPlan.location} from your saved plans`}
-                                style={{ width: "200px", background: "white"}}
+                                className="button-main button-delete"
                                 onClick={deletePlan}
                             >
                                 Delete Plan
@@ -104,7 +105,7 @@ export default function TravelPlanDetail() {
                         as={Link}
                         to="/"
                         style={{ width: "200px" }}
-                        className="my-2 mx-auto"
+                        className="button-main my-2 mx-auto"
                         >
                             Return to Home
                     </Button>

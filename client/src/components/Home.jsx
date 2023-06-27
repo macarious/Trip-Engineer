@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { Container, Row, Button, } from "react-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
+import "../styles/home.css";
 
 export default function Home() {
     const { user, logout } = useAuth0();
 
     return (
-        <Container style={{ marginTop: '10vh'}} className="d-flex flex-column align-items-center mb-4">
+        <Container className="home-content d-flex flex-column align-items-center mb-4">
             <div className="d-grid gap-3">
                 <Row className="text-center">
                     <p>
@@ -44,7 +45,7 @@ export default function Home() {
                         aria-label="Profile"
                         aria-describedby="Directs user to the Profile page"
                         style={{ width: "200px" }}
-                        className="mx-auto my-0"
+                        className="button-main mx-auto my-0"
                         as={Link}
                         to="/profile"
                     >
@@ -56,10 +57,7 @@ export default function Home() {
                         variant="outline-primary"
                         aria-label="Log Out"
                         aria-describedby="Logs the user out of the application"
-                        style={{ width: "200px", backgroundColor: "white"}}
-                        className="mx-auto my-0"
-                        as={Link}
-                        to="/login"
+                        className="button-main button-logout mx-auto my-0"
                         onClick={() => logout({ returnTo: window.location.origin })}
                     >
                         Log Out

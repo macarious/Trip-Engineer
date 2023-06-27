@@ -29,7 +29,7 @@ export default function VerifyUser() {
     }, [accessToken, navigate]);
 
     return (
-        <Container style={{ marginTop: '30vh' }} className="d-flex flex-column align-items-center justify-content-center">
+        <Container className="content-verify-user d-flex flex-column align-items-center justify-content-center">
             <div className="d-grid gap-2">
                 <Row className="mx-auto">
                     Loading...

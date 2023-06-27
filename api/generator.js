@@ -1,8 +1,11 @@
 import * as dotenv from 'dotenv';
 import express from "express";
+import pkg from "@prisma/client";
 
 dotenv.config();
 const generatorRouter = express.Router();
+const { PrismaClient } = pkg;
+const prisma = new PrismaClient();
 
 // This file contains the endpoints related to schedule generation
 

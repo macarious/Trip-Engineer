@@ -1,7 +1,7 @@
 import { Outlet, Link } from "react-router-dom";
 import { Container, Nav, Navbar, } from 'react-bootstrap';
 import { useAuth0 } from "@auth0/auth0-react";
-import background from "../images/travel-items-white.jpg";
+import "../styles/appLayout.css";
 
 export default AppLayout;
 
@@ -9,26 +9,14 @@ function AppLayout() {
     const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0();
     
     return (
-        <div>
-            <div
-                style={{
-                    backgroundImage: `url(${background})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundAttachment: "fixed",
-                    backgroundPosition: "top center",
-                    backgroundSize: "cover",
-                    minHeight: "100vh",
-                    opacity: "0.2",
-                    sticky: "top",
-                }}
-            >
-            </div>
-            <div style={{ position: "absolute", top: "0", left: "0", width: "100%"}}>
+        <>
+            <div className="main">
                 <Navbar
                     expand="lg"
                     bg="dark"
                     variant="dark"
                     sticky="top"
+                    nameClass="navbar"
                 >
                     <Container>
                         <Navbar.Brand as={Link} to="/">Trip Engineer</Navbar.Brand>
@@ -49,17 +37,16 @@ function AppLayout() {
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
-                <div className="content d-flex flex-grow-1 mx-auto" style={{minHeight: "89vh", maxWidth: "1280px"}}>
+                <div className="content d-flex flex-grow-1">
                     <Outlet />
                 </div>
-                {/* Footer containing site information */}
                 <Navbar
                     expand="lg"
                     bg="dark"
                     variant="dark"
-                    style={{ width: "100%" }}
+                    nameClass="footer"
                 >
-                    <Container className="">
+                    <Container>
                         <Nav>
                             <Nav.Link as={Link} to="/">&copy; 2023 Trip Engineer</Nav.Link>
                         </Nav>
@@ -69,6 +56,6 @@ function AppLayout() {
                     </Container>
                 </Navbar>
             </div>
-        </div>
+        </>
     );
 }

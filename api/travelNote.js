@@ -1,10 +1,9 @@
+import * as dotenv from 'dotenv';
 import express from "express";
 import pkg from "@prisma/client";
-import * as dotenv from 'dotenv';
 import isNoteBelongsToUser from "./util/isNoteBelongsToUser.js";
 import isPlanBelongsToUser from "./util/isPlanBelongsToUser.js";
 import userStatusVerified from "./util/userStatusVerified.js";
-
 
 dotenv.config()
 const travelNoteRouter = express.Router();
@@ -12,33 +11,6 @@ const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 
 // This file contains all the endpoints related to travel notes
-
-travelNoteRouter.post("/", async (req, res) => {
-    const { title, travelPlanId } = req.body;
-    
-    // Verify user status
-    if (!userStatusVerified(req, res)) {
-        return;
-    };
-    
-    // Verify required fields
-    if (!title || !travelPlanId) {
-        res.status(400).send("Missing required fields");
-        return;
-    };
-
-    // Create the note
-    const note = await prisma.travelNote.create({
-        data: {
-            title,
-            travelPlan: { connect: { id: parseInt(planId) } },
-        },
-    });
-
-    // Return the note
-    res.status(201).json(note);
-});
-
 
 /**
  * CREATE -- create a note
@@ -75,8 +47,6 @@ travelNoteRouter.post("/:planId", async (req, res) => {
  * RETRIEVE -- retrieve all notes
  */
 travelNoteRouter.get("/", async (req, res) => {
-    const { noteId } = req.params;
-
     // Verify user status
     if (!userStatusVerified(req, res)) {
         return;
@@ -277,6 +247,5 @@ travelNoteRouter.delete("/:noteId", async (req, res) => {
     // Return the deleted note
     res.json(deteledNote);
 });
-
 
 export default travelNoteRouter;

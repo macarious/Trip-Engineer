@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Form, Row } from 'react-bootstrap';
 import { useAuthToken } from "../AuthTokenContext";
 import useTravelNotesByPlan from "../hooks/useTravelNotesByPlan";
+import "../styles/noteForm.css";
 
 export default function TravelNoteForm(props) {
 
@@ -100,7 +101,7 @@ export default function TravelNoteForm(props) {
                             type="submit"
                             aria-label="Submit"
                             aria-describedby="Submit a note to attach to a travel plan"
-                            style={{ width: '150px' }}
+                            className="add-button"
                         >
                             Add
                         </Button>
@@ -108,7 +109,7 @@ export default function TravelNoteForm(props) {
                             variant="outline-secondary"
                             aria-label="Cancel"
                             aria-describedby="Exit from the note form"
-                            style={{ width: '150px' }}
+                            className="return-button"
                             onClick={handleCancelButtonClick}
                         >
                             Return

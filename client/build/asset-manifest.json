@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.4da62354.css",
+    "main.js": "/static/js/main.3bed5179.js",
+    "static/media/travel-items-white.png": "/static/media/travel-items-white.51b3800105a15e60135e.png",
+    "index.html": "/index.html",
+    "main.4da62354.css.map": "/static/css/main.4da62354.css.map",
+    "main.3bed5179.js.map": "/static/js/main.3bed5179.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4da62354.css",
+    "static/js/main.3bed5179.js"
+  ]
+}

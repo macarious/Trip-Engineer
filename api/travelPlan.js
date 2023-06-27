@@ -1,6 +1,6 @@
+import * as dotenv from 'dotenv';
 import express from "express";
 import pkg from "@prisma/client";
-import * as dotenv from 'dotenv';
 import isPlanBelongsToUser from "./util/isPlanBelongsToUser.js";
 import userStatusVerified from "./util/userStatusVerified.js";
 
@@ -12,7 +12,7 @@ const prisma = new PrismaClient();
 // This file contains all the endpoints related to travel plans
 
 /**
- * CREATE -- create a plan with only metadata
+ * CREATE -- create a plan with only metadata (no schedule)
  */
 travelPlanRouter.post("/", async (req, res) => {
     const auth0Id = req.auth.payload.sub;
@@ -51,12 +51,12 @@ travelPlanRouter.post("/", async (req, res) => {
  * RETRIEVE -- retrieve a plan by id
  */
 travelPlanRouter.get("/:id", async (req, res) => {
+    const { id } = req.params;
+
     // Verify user status
     if (!userStatusVerified(req, res)) {
         return;
     };
-
-    const { id } = req.params;
 
     // Retrieve the plan
     const plan = await prisma.travelPlan.findUnique({
@@ -112,13 +112,13 @@ travelPlanRouter.get("/", async (req, res) => {
  * UPDATE -- updates a plan with generated itineraries
  */
 travelPlanRouter.put("/:id", async (req, res) => {
+    const { id } = req.params;
+    const schedule = req.body;
+    
     // Verify user status
     if (!userStatusVerified(req, res)) {
         return;
     };
-
-    const { id } = req.params;
-    const schedule = req.body;
 
     // Verify required fields
     if (!schedule) {
@@ -157,12 +157,12 @@ travelPlanRouter.put("/:id", async (req, res) => {
  * DELETE -- delete a plan by id
  */
 travelPlanRouter.delete("/:id", async (req, res) => {
+    const { id } = req.params;
+    
     // Verify user status
     if (!userStatusVerified(req, res)) {
         return;
     };
-    
-    const { id } = req.params;
 
     // Retrieve the plan
     const plan = await prisma.travelPlan.findUnique({
