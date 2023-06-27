@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# Trip Engineer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to Trip Engineer, a web application that helps you generate personalized vacation plans with ease! Whether you're planning a short getaway or a multi-day adventure, Trip Engineer has got you covered. Simply input your desired location, duration, arrival and departure time, and transportation mode, and let us do the rest. Visit the website: [Trip Engineer (https://trip-engineer.vercel.app/)](https://trip-engineer.vercel.app/).
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+### Generate New Plan
 
-### `npm start`
+The "Generate New Plan" page is where the magic happens. Here, you can effortlessly create a new vacation plan tailored to your preferences. Simply provide your desired location, duration (up to 4 days), arrival time, departure time, and select your preferred mode of transportation (car or transit). Please note that generating the plan may take a few moments, but don't worry, it will be automatically saved for your convenience.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Saved Plans
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The "Saved Plans" page offers a comprehensive overview of all the plans you've generated. Each plan is summarized to give you a quick glance at its contents. If you want to dive deeper into a specific plan, just click the "View" button. If you wish to remove a saved plan, simply click "Delete". Additionally, you have the ability to add tags to your saved plans for better organization. By clicking the "Pencil" icon, you can enter tag edit mode, where you can add new tags or delete existing ones. To exit tag edit mode, click the "Return" button. It's important to note that any unsaved changes will be discarded upon returning.
 
-### `npm test`
+### Detailed Plan
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The "Detailed Plan" page presents your vacation itinerary in a well-organized manner. The schedule is conveniently separated by days, allowing you to easily navigate through your trip. For each day, you'll find a list of activities with their corresponding start times, names, brief descriptions, and links to their addresses. If you need to quickly navigate back to the top of the page, simply select "Back to Top".
 
-### `npm run build`
+## Limitations
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+While Trip Engineer offers powerful planning capabilities, there are a few limitations to be aware of:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Trip durations are currently limited to a maximum of 4 days.
+- Additional parameters beyond location, duration, arrival/departure time, and transportation mode are not taken into account.
+- Tags currently do not interact with each other, but they can still help you organize your plans effectively.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Future Plans
 
-### `npm run eject`
+We have an exciting roadmap ahead for Trip Engineer. Here's a glimpse of what's in store:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **Personalization Options**: We'll be introducing additional options for you to personalize your vacation plans even further. You'll be able to save specific preferences as favorites, allowing for easy reuse in future plans.
+- **Enhanced Search Function**: We're developing a powerful search function that will enable you to locate specific plans quickly. Tags will play a crucial role in this search functionality, making it effortless to find the perfect itinerary.
+- **Maps and Images**: To enrich your experience and provide more information, we'll be incorporating interactive maps and captivating images into Trip Engineer. This will help you visualize your destinations and activities better.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+We hope you find Trip Engineer helpful and enjoyable. If you have any questions, feedback, or suggestions, please don't hesitate to reach out. Happy planning!
