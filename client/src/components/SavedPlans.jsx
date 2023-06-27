@@ -216,8 +216,8 @@ export default function SavedPlans() {
                     <Col key="Create New" className="align-self-stretch">
                         <Card className="mx-auto my-2 pb-2">
                             <Card.Body className="p-0">
-                                <Card.Header><strong>Plan:</strong></Card.Header>
-                                <div className="d-flex justify-content-center mt-3 mb-2">
+                                <Card.Header><strong>New Plan:</strong></Card.Header>
+                                <div className="d-flex justify-content-center mt-4 mb-3">
                                     <Button
                                         aria-label="Create a New Plan"
                                         aria-describedby="Generates a new travel plan for the user"
