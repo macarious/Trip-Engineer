@@ -4,5 +4,14 @@
 }
 
 .button-main-medium {
-    width: 150px;
+    width: 100px;
+}
+
+.button-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.bi-pencil-fill {
+    font-size: 0.75rem;
 }

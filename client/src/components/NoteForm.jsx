@@ -95,15 +95,15 @@ export default function TravelNoteForm(props) {
                         <Form.Control.Feedback type="invalid">(1 to 15 characters)</Form.Control.Feedback>
                     </Form.Group>
                     
-                    <div className="d-flex flex-wrap justify-content-center gap-2">
+                    <div className="d-flex flex-wrap justify-content-center gap-3">
                         <Button
-                            variant="primary"
+                            variant="secondary"
                             type="submit"
                             aria-label="Submit"
                             aria-describedby="Submit a note to attach to a travel plan"
                             className="add-button"
                         >
-                            Add
+                            Add Tag
                         </Button>
                         <Button
                             variant="outline-secondary"

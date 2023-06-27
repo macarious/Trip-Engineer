@@ -143,27 +143,8 @@ export default function SavedPlans() {
                                     </Col>
                                 </Row>
                                 <hr className="my-3" />
-                                {(!editNoteMode[travelPlan.id])? (
-                                    <div className="d-flex flex-wrap justify-content-center gap-2 mb-1">
-                                        <Button
-                                            aria-label={`Edit tag for ${travelPlan.location}`}
-                                            aria-describedby={`Add or delete a tag for ${travelPlan.location}`}
-                                            as={Link}
-                                            className="button-main-medium mx-1"
-                                            onClick={() => {openEditNoteMode(travelPlan.id)}}
-                                        >
-                                            Add / Edit Tag
-                                        </Button>
-                                    </div>
-                                ) : (
-                                    <Row>
-                                        <TravelNoteForm
-                                            planId={travelPlan.id}
-                                            callback={callbackFromNoteForm}
-                                        />
-                                    </Row>
-                                )}
-                                <div className="d-flex flex-wrap gap-0 mx-2 my-3">
+                                <div className="d-flex flex-wrap align-items-start gap-0 mx-2 my-3">
+                                    <>
                                     {(filterTravelNotesByPlan(travelPlan.id).map(travelNote => (
                                         <Badge
                                             bg="warning"
@@ -184,6 +165,28 @@ export default function SavedPlans() {
                                             )}
                                         </Badge>
                                     )))}
+                                    </>
+                                {(!editNoteMode[travelPlan.id])? (
+                                    <div className="d-flex flex-wrap justify-content-end gap-2 mb-1">
+                                        <Button
+                                            variant="light"
+                                            aria-label={`Edit tag for ${travelPlan.location}`}
+                                            aria-describedby={`Add or delete a tag for ${travelPlan.location}`}
+                                            as={Link}
+                                            className="button-icon mx-1 p-0"
+                                            onClick={() => {openEditNoteMode(travelPlan.id)}}
+                                        >
+                                            <span class="bi bi-pencil-fill"></span>
+                                        </Button>
+                                    </div>
+                                ) : (
+                                    <Row className="mx-0 flex-grow-1">
+                                        <TravelNoteForm
+                                            planId={travelPlan.id}
+                                            callback={callbackFromNoteForm}
+                                        />
+                                    </Row>
+                                )}
                                 </div>
                                 <hr className="my-3" />
                                 <div className="d-flex flex-wrap justify-content-center gap-2 mb-1">
@@ -194,7 +197,7 @@ export default function SavedPlans() {
                                         to={`/plan/${travelPlan.id}`}
                                         className="button-main-medium mx-1"
                                     >
-                                        View Plan
+                                        <span class="bi bi-eye"></span> View
                                     </Button>
                                     <Button
                                         variant="outline-danger"
@@ -203,7 +206,7 @@ export default function SavedPlans() {
                                         className="button-main-medium mx-1"
                                         onClick={() => deletePlan(travelPlan.id)}
                                     >
-                                        Delete Plan
+                                        <span class="bi bi-trash"></span> Delete
                                     </Button>
                                 </div>
                             </Card.Body>
