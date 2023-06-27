@@ -176,6 +176,13 @@ travelPlanRouter.delete("/:id", async (req, res) => {
         return;
     };
 
+    // Delete all notes attached to the plan
+    await prisma.travelNote.deleteMany({
+        where: {
+            travelPlanId: parseInt(id),
+        },
+    });
+
     // Delete the plan
     const deletedPlan = await prisma.travelPlan.delete({
         where: {

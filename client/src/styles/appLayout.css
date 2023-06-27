@@ -10,7 +10,7 @@
 .content {
     min-height: calc(100vh - 120px);
     width: 100%;
-    background-image: url(../images/travel-items-white-25.png);
+    background-image: url(../images/travel-items-white-25.webp);
     background-attachment: fixed;
     background-position: bottom center;
     background-repeat: no-repeat;

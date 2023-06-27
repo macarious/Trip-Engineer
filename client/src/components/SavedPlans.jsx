@@ -146,7 +146,6 @@ export default function SavedPlans() {
                                 {(!editNoteMode[travelPlan.id])? (
                                     <div className="d-flex flex-wrap justify-content-center gap-2 mb-1">
                                         <Button
-                                            variant="warning"
                                             aria-label={`Edit tag for ${travelPlan.location}`}
                                             aria-describedby={`Add or delete a tag for ${travelPlan.location}`}
                                             as={Link}
