@@ -1,10 +1,12 @@
 # Trip Engineer
 
+## 1. Overview
+
 Welcome to Trip Engineer, a web application that helps you generate personalized vacation plans with ease! Whether you're planning a short getaway or a multi-day adventure, Trip Engineer has got you covered. Simply input your desired location, duration, arrival and departure time, and transportation mode, and let us do the rest. Visit the website: [Trip Engineer](https://trip-engineer.vercel.app/) (url=[https://trip-engineer.vercel.app/](https://trip-engineer.vercel.app/)).
 
 ![image](https://github.com/NEU-CS5610-2023-02-VAN/assibment-3-3-macarious/assets/63441014/8924e6d7-f9d8-401b-957a-9ef43a171371)
 
-## Features
+## 2. Features
 
 ### Generate New Plan
 
@@ -24,7 +26,7 @@ The "Detailed Plan" page presents your vacation itinerary in a well-organized ma
 
 ![image](https://github.com/NEU-CS5610-2023-02-VAN/assibment-3-3-macarious/assets/63441014/a8b66f78-9a50-480f-9fbf-81582c2b19da)
 
-## Limitations
+## 3. Limitations
 
 While Trip Engineer offers powerful planning capabilities, there are a few limitations to be aware of:
 
@@ -32,7 +34,7 @@ While Trip Engineer offers powerful planning capabilities, there are a few limit
 - Additional parameters beyond location, duration, arrival/departure time, and transportation mode are not taken into account.
 - Tags currently do not interact with each other, but they can still help you organize your plans effectively.
 
-## Future Plans
+## 4. Future Plans
 
 We have an exciting roadmap ahead for Trip Engineer. Here's a glimpse of what's in store:
 
