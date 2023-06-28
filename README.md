@@ -2,13 +2,15 @@
 
 Welcome to Trip Engineer, a web application that helps you generate personalized vacation plans with ease! Whether you're planning a short getaway or a multi-day adventure, Trip Engineer has got you covered. Simply input your desired location, duration, arrival and departure time, and transportation mode, and let us do the rest. Visit the website: [Trip Engineer](https://trip-engineer.vercel.app/) [https://trip-engineer.vercel.app/](https://trip-engineer.vercel.app/).
 
+![image](https://github.com/NEU-CS5610-2023-02-VAN/assibment-3-3-macarious/assets/63441014/8924e6d7-f9d8-401b-957a-9ef43a171371)
+
 ## Features
 
 ### Generate New Plan
 
 The "Generate New Plan" page is where the magic happens. Here, you can effortlessly create a new vacation plan tailored to your preferences. Simply provide your desired location, duration (up to 4 days), arrival time, departure time, and select your preferred mode of transportation (car or transit). Please note that generating the plan may take a few moments, but don't worry, it will be automatically saved for your convenience.
 
-![image](https://github.com/NEU-CS5610-2023-02-VAN/assibment-3-3-macarious/assets/63441014/a8b66f78-9a50-480f-9fbf-81582c2b19da)
+![image](https://github.com/NEU-CS5610-2023-02-VAN/assibment-3-3-macarious/assets/63441014/367d6a06-6a53-44c4-87c0-1311b20dc195)
 
 ### View Saved Plans
 
@@ -19,6 +21,8 @@ The "Saved Plans" page offers a comprehensive overview of all the plans you've g
 ### View Detailed Plan
 
 The "Detailed Plan" page presents your vacation itinerary in a well-organized manner. The schedule is conveniently separated by days, allowing you to easily navigate through your trip. For each day, you'll find a list of activities with their corresponding start times, names, brief descriptions, and links to their addresses. If you need to quickly navigate back to the top of the page, simply select "Back to Top".
+
+![image](https://github.com/NEU-CS5610-2023-02-VAN/assibment-3-3-macarious/assets/63441014/a8b66f78-9a50-480f-9fbf-81582c2b19da)
 
 ## Limitations
 
