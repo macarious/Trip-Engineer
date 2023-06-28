@@ -12,7 +12,7 @@ export default function TravelPlanCardGroup(props) {
                         <Col key={"Day" + dayIndex}>
                             <Card className="m-2">
                                 <Card.Body className="p-0">
-                                    <Card.Header>Day {dayIndex + 1}</Card.Header>
+                                    <Card.Header className="background-accent">Day {dayIndex + 1}</Card.Header>
                                     <ListGroup variant="flush">
                                         {dayActivities.map((activity) => (
                                             <ListGroup.Item key={dayIndex + activity.timeOfDay}>

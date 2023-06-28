@@ -109,7 +109,7 @@ export default function SavedPlans() {
                     <Col key={"Plan" + travelPlanIndex}>
                         <Card className="mx-auto my-2 pb-2">
                             <Card.Body className="p-0">
-                                <Card.Header><strong>Plan {travelPlanIndex + 1}: {travelPlan.location}</strong></Card.Header>
+                                <Card.Header className="background-accent"><strong>Plan {travelPlanIndex + 1}: {travelPlan.location}</strong></Card.Header>
                                 <Row>
                                     <Col className="d-flex justify-content-end mx-1 mt-2 px-0">
                                         Duration |
@@ -166,6 +166,9 @@ export default function SavedPlans() {
                                         </Badge>
                                     )))}
                                     </>
+                                {filterTravelNotesByPlan(travelPlan.id).length === 0 && (
+                                    <p><small>Add tags</small></p>
+                                )}
                                 {(!editNoteMode[travelPlan.id])? (
                                     <div className="d-flex flex-wrap justify-content-end gap-2 mb-1">
                                         <Button
@@ -216,7 +219,7 @@ export default function SavedPlans() {
                     <Col key="Create New" className="align-self-stretch">
                         <Card className="mx-auto my-2 pb-2">
                             <Card.Body className="p-0">
-                                <Card.Header><strong>New Plan:</strong></Card.Header>
+                                <Card.Header className="background-accent"><strong>New Plan:</strong></Card.Header>
                                 <div className="d-flex justify-content-center mt-4 mb-3">
                                     <Button
                                         aria-label="Create a New Plan"

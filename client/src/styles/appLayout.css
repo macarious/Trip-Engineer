@@ -21,3 +21,7 @@
     height: 60px;
     width: 100%;
 }
+
+.background-accent {
+    background-color: rgb(228,161,27, 0.25);
+}
