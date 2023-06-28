@@ -8,9 +8,13 @@ Welcome to Trip Engineer, a web application that helps you generate personalized
 
 The "Generate New Plan" page is where the magic happens. Here, you can effortlessly create a new vacation plan tailored to your preferences. Simply provide your desired location, duration (up to 4 days), arrival time, departure time, and select your preferred mode of transportation (car or transit). Please note that generating the plan may take a few moments, but don't worry, it will be automatically saved for your convenience.
 
+![image](https://github.com/NEU-CS5610-2023-02-VAN/assibment-3-3-macarious/assets/63441014/a8b66f78-9a50-480f-9fbf-81582c2b19da)
+
 ### View Saved Plans
 
 The "Saved Plans" page offers a comprehensive overview of all the plans you've generated. Each plan is summarized to give you a quick glance at its contents. If you want to dive deeper into a specific plan, just click the "View" button. If you wish to remove a saved plan, simply click "Delete". Additionally, you have the ability to add tags to your saved plans for better organization. By clicking the "Pencil" icon, you can enter tag edit mode, where you can add new tags or delete existing ones. To exit tag edit mode, click the "Return" button. It's important to note that any unsaved changes will be discarded upon returning.
+
+![image](https://github.com/NEU-CS5610-2023-02-VAN/assibment-3-3-macarious/assets/63441014/1e753e98-ffa5-4318-ba77-94f88d3818dd)
 
 ### View Detailed Plan
 
