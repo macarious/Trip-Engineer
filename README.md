@@ -1,6 +1,8 @@
 # Trip Engineer
 
-Visit the website: [Trip Engineer](https://trip-engineer.vercel.app/) (url=[https://trip-engineer.vercel.app/](https://trip-engineer.vercel.app/)).
+Visit the website: [Trip Engineer](https://trip-engineer.vercel.app/)
+
+url: [https://trip-engineer.vercel.app/](https://trip-engineer.vercel.app/)
 
 ## 1. Overview
 
