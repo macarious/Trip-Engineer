@@ -1,8 +1,6 @@
 # Trip Engineer
 
-Visit the website: [Trip Engineer](https://trip-engineer.vercel.app/)
-
-url: [https://trip-engineer.vercel.app/](https://trip-engineer.vercel.app/)
+Visit the website: [Trip Engineer](https://trip-engineer.vercel.app/) ([https://trip-engineer.vercel.app/](https://trip-engineer.vercel.app/))
 
 ## 1. Overview
 
@@ -40,10 +38,10 @@ While Trip Engineer offers powerful planning capabilities, there are a few limit
 
 ## 4. Future Plans
 
-We have an exciting roadmap ahead for Trip Engineer. Here's a glimpse of what's in store:
+I have an exciting roadmap ahead for Trip Engineer. Here's a glimpse of what's in store:
 
-- **Personalization Options**: We'll be introducing additional options for you to personalize your vacation plans even further. You'll be able to save specific preferences as favorites, allowing for easy reuse in future plans.
-- **Enhanced Search Function**: We're developing a powerful search function that will enable you to locate specific plans quickly. Tags will play a crucial role in this search functionality, making it effortless to find the perfect itinerary.
-- **Maps and Images**: To enrich your experience and provide more information, we'll be incorporating interactive maps and captivating images into Trip Engineer. This will help you visualize your destinations and activities better.
+- **Personalization Options**: I'll be introducing additional options for you to personalize your vacation plans even further. You'll be able to save specific preferences as favorites, allowing for easy reuse in future plans.
+- **Enhanced Search Function**: I am developing a powerful search function that will enable you to locate specific plans quickly. Tags will play a crucial role in this search functionality, making it effortless to find the perfect itinerary.
+- **Maps and Images**: To enrich your experience and provide more information, I'll be incorporating interactive maps and captivating images into Trip Engineer. This will help you visualize your destinations and activities better.
 
-We hope you find Trip Engineer helpful and enjoyable. If you have any questions, feedback, or suggestions, please don't hesitate to reach out. Happy planning!
+I hope you find Trip Engineer helpful and enjoyable. If you have any questions, feedback, or suggestions, please don't hesitate to reach out. Happy planning!
