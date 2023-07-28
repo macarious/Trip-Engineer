@@ -6,7 +6,12 @@ Visit the website: [Trip Engineer](https://trip-engineer.vercel.app/) ([https://
 
 Welcome to Trip Engineer, a web application that helps you generate personalized vacation plans with ease! Whether you're planning a short getaway or a multi-day adventure, Trip Engineer has got you covered. Simply input your desired location, duration, arrival and departure time, and transportation mode, and let us do the rest.
 
+### Desktop View
 ![image](https://github.com/NEU-CS5610-2023-02-VAN/assibment-3-3-macarious/assets/63441014/8924e6d7-f9d8-401b-957a-9ef43a171371)
+
+### Mobile View
+![image](https://github.com/macarious/Trip-Engineer/assets/63441014/dbe9d9f4-0c81-483f-a304-e500d90ef08e)
+
 
 ## 2. Features
 
